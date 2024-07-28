@@ -11,6 +11,7 @@ interface props {
   onPress?: () => void;
   titleColor?: string;
   borderWidth?: number;
+  borderRadius?: number;
 }
 
 const CustomBtn = (props: props): React.JSX.Element => {
@@ -25,7 +26,7 @@ const CustomBtn = (props: props): React.JSX.Element => {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: props.backgroundColor,
-        borderRadius: 100,
+        borderRadius: props.borderRadius || 100,
         borderWidth: props.borderWidth || 0,
         borderColor: props.borderWidth == 1 ? COLORS.main : '#00000000',
       }}>

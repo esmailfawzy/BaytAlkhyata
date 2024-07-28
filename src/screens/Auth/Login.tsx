@@ -5,21 +5,19 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import React from 'react';
 import {COLORS} from '../../constants/Colors';
 import {IMGS} from '../../assets';
 import {RPH, RPW} from '../../utils/ScreenSize';
-import ChevronRight from '../../assets/icons/ChevronRight';
 import {useNavigation} from '@react-navigation/native';
 import LogoSvg from '../../assets/imgs/Logo';
-import {CONSTANTS} from '../../constants/Constants';
 import {FONTS} from '../../constants/Fonts';
 import {AuthInput, CustomBtn} from '../../components';
 
 const Login = (): React.JSX.Element => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView
       style={{
@@ -100,7 +98,9 @@ const Login = (): React.JSX.Element => {
             />
             <View style={{marginBottom: RPW(6)}} />
             <Text
-              onPress={() => {}}
+              onPress={() => {
+                navigation.navigate('ForgetPassword');
+              }}
               style={{
                 fontFamily: FONTS.Manuale,
                 color: COLORS.main,
@@ -129,7 +129,9 @@ const Login = (): React.JSX.Element => {
               }}>
               ليس لديك حساب؟{' '}
               <Text
-                onPress={() => {}}
+                onPress={() => {
+                  navigation.navigate('Signup');
+                }}
                 style={{
                   color: COLORS.main,
                 }}>

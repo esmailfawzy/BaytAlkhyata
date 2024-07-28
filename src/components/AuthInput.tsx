@@ -26,6 +26,7 @@ interface KnownProps {
   required: boolean;
   keyboardType?: 'default' | 'number-pad' | 'email-address' | 'phone-pad';
   secureText?: boolean;
+  borderRadius?: number;
 }
 
 const AuthInput = (props: KnownProps): React.JSX.Element => {
@@ -43,7 +44,7 @@ const AuthInput = (props: KnownProps): React.JSX.Element => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          borderRadius: 35,
+          borderRadius: props.borderRadius || 35,
         },
         Platform.OS == 'ios' ? {...iosShadow} : {elevation: 5},
       ]}>
@@ -52,7 +53,7 @@ const AuthInput = (props: KnownProps): React.JSX.Element => {
         placeholderTextColor={COLORS.inputColor}
         style={{
           textAlign: 'right',
-          color: COLORS.inputColor,
+          color: COLORS.black,
           flex: 1,
           height: '100%',
           fontSize: 14,
@@ -62,7 +63,7 @@ const AuthInput = (props: KnownProps): React.JSX.Element => {
         }}
         cursorColor={COLORS.main}
         keyboardType={props.keyboardType}
-        secureTextEntry={isSecureText}
+        secureTextEntry={props.secureText && isSecureText}
       />
       {props.secureText && (
         <TouchableOpacity onPress={toogleSecureText}>
