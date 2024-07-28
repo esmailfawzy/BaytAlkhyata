@@ -27,6 +27,7 @@ const CustomBtn = (props: props): React.JSX.Element => {
         backgroundColor: props.backgroundColor,
         borderRadius: 100,
         borderWidth: props.borderWidth || 0,
+        borderColor: props.borderWidth == 1 ? COLORS.main : '#00000000',
       }}>
       <Text
         style={{
