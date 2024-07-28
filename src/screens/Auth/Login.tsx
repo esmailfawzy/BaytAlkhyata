@@ -129,9 +129,7 @@ const Login = (): React.JSX.Element => {
               }}>
               ليس لديك حساب؟{' '}
               <Text
-                onPress={() => {
-                  alert('hi');
-                }}
+                onPress={() => {}}
                 style={{
                   color: COLORS.main,
                 }}>
