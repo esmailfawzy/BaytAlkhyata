@@ -17,8 +17,7 @@ import {CONSTANTS} from '../../constants/Constants';
 import {FONTS} from '../../constants/Fonts';
 import {AuthInput, CustomBtn} from '../../components';
 import Ellipse from '../../assets/icons/Ellipse';
-
-const ForgetPassword = (): React.JSX.Element => {
+const OTP = () => {
   const navigation = useNavigation();
   return (
     <SafeAreaView
@@ -64,7 +63,7 @@ const ForgetPassword = (): React.JSX.Element => {
               alignSelf: 'center',
               marginBottom: RPH(5.5),
             }}>
-            استرداد كلمة المرور
+            قم بادخال الرمز المرسل اليك
           </Text>
 
           <AuthInput
@@ -81,11 +80,9 @@ const ForgetPassword = (): React.JSX.Element => {
           />
           <CustomBtn
             backgroundColor={COLORS.main}
-            title="ارسال رمز الأمان"
+            title="ادخال"
             borderRadius={8}
-            onPress={() => {
-              navigation.navigate('OTP');
-            }}
+            onPress={() => {}}
             titleColor={COLORS.white}
           />
         </View>
@@ -94,6 +91,6 @@ const ForgetPassword = (): React.JSX.Element => {
   );
 };
 
-export default ForgetPassword;
+export default OTP;
 
 const styles = StyleSheet.create({});
