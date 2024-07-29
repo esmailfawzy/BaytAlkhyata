@@ -4,10 +4,11 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {COLORS} from '../../constants/Colors';
 import {RPH, RPW} from '../../utils/ScreenSize';
 import ChevronRight from '../../assets/icons/ChevronRight';
@@ -17,8 +18,35 @@ import {CONSTANTS} from '../../constants/Constants';
 import {FONTS} from '../../constants/Fonts';
 import {AuthInput, CustomBtn} from '../../components';
 import Ellipse from '../../assets/icons/Ellipse';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
+
+const iosShadow = {
+  shadowOpacity: 0.2,
+  shadowColor: '#080808',
+  shadowOffset: {
+    height: 0,
+    width: 0,
+  },
+};
+
 const OTP = () => {
   const navigation = useNavigation();
+  const [otp, setOtp] = useState(['', '', '', '', '']);
+  const inputs: any[] = [];
+
+  useEffect(() => {
+    inputs[0].focus();
+  }, []);
+
+  const handleOtpChange = (value: number | string, index: number) => {
+    const newOtp: any[] = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+    // Move focus to the next box if the current one has a value
+    if (value && index < newOtp.length - 1) {
+      inputs[index + 1].focus();
+    }
+  };
   return (
     <SafeAreaView
       style={{
@@ -66,13 +94,24 @@ const OTP = () => {
             قم بادخال الرمز المرسل اليك
           </Text>
 
-          <AuthInput
-            placeholder="رقم الهاتف"
-            keyboardType="phone-pad"
-            secureText={false}
-            required={false}
-            borderRadius={8}
-          />
+          <View style={styles.container}>
+            {otp.map((digit, index) => (
+              <TextInput
+                key={index}
+                style={[
+                  styles.box,
+                  Platform.OS == 'ios' ? {...iosShadow} : {elevation: 5},
+                ]}
+                maxLength={1}
+                keyboardType="numeric"
+                onChangeText={value => handleOtpChange(value, index)}
+                value={digit}
+                ref={input => {
+                  inputs[index] = input;
+                }}
+              />
+            ))}
+          </View>
           <View
             style={{
               marginBottom: RPH(6),
@@ -93,4 +132,24 @@ const OTP = () => {
 
 export default OTP;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    writingDirection: 'ltr',
+  },
+  box: {
+    borderWidth: 1,
+    borderColor: COLORS.main,
+    borderRadius: 8,
+    width: 50,
+    height: 50,
+    margin: 10,
+    textAlign: 'center',
+    fontSize: 20,
+    fontFamily: FONTS.Manuale,
+    fontWeight: Platform.OS == 'android' ? 'bold' : '600',
+  },
+});
