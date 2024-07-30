@@ -61,7 +61,6 @@ const OTP = () => {
             paddingHorizontal: RPW(8),
           }}>
           <Ellipse />
-
           <View
             style={{
               flexDirection: 'row',
@@ -114,6 +113,35 @@ const OTP = () => {
           </View>
           <View
             style={{
+              marginTop: 5,
+              width: '100%',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              alignSelf: 'center',
+            }}>
+            <Text
+              style={{
+                fontFamily: FONTS.Manuale,
+                fontSize: 10,
+                fontWeight: '500',
+                color: '#777777',
+                textDecorationLine: 'underline',
+              }}>
+              اعادة الارسال
+            </Text>
+            <Text
+              style={{
+                fontFamily: FONTS.Manuale,
+                fontSize: 10,
+                fontWeight: '500',
+                color: COLORS.main,
+              }}>
+              00:40
+            </Text>
+          </View>
+          <View
+            style={{
               marginBottom: RPH(6),
             }}
           />
@@ -139,6 +167,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     writingDirection: 'ltr',
+    width: '90%',
   },
   box: {
     borderWidth: 1,

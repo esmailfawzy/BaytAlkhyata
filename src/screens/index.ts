@@ -5,6 +5,8 @@ import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
 import ForgetPassword from "./Auth/ForgetPassword";
 import OTP from "./Auth/OTP";
+import AllModules from "./User/AllModules";
+
 export {
   Onboarding1,
   Onboarding2,
@@ -14,4 +16,5 @@ export {
   ForgetPassword,
   OTP,
 
+  AllModules,
 }

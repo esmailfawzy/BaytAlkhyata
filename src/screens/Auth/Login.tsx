@@ -114,7 +114,11 @@ const Login = (): React.JSX.Element => {
             <CustomBtn
               backgroundColor={COLORS.white}
               title="تسجيل الدخول"
-              onPress={() => {}}
+              onPress={() => {
+                navigation.navigate('UserDrawer', {
+                  screen: 'AllModules',
+                });
+              }}
               titleColor={COLORS.main}
               borderWidth={1}
             />
