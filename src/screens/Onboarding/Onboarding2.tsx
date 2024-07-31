@@ -93,7 +93,7 @@ function Onboarding2(): React.JSX.Element {
                 backgroundColor={COLORS.customGray}
                 titleColor={COLORS.black}
                 onPress={() => {
-                  navigation.navigate('AuthStack', {
+                  navigation.replace('AuthStack', {
                     screen: 'Login',
                   });
                 }}
@@ -113,7 +113,7 @@ function Onboarding2(): React.JSX.Element {
                 backgroundColor={COLORS.main}
                 titleColor={COLORS.white}
                 onPress={() => {
-                  navigation.navigate('AuthStack', {
+                  navigation.replace('AuthStack', {
                     screen: 'Signup',
                   });
                 }}

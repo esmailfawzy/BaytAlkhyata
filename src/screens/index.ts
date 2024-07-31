@@ -6,6 +6,11 @@ import Signup from "./Auth/Signup";
 import ForgetPassword from "./Auth/ForgetPassword";
 import OTP from "./Auth/OTP";
 import AllModules from "./User/AllModules";
+import Profile from "./User/Profile";
+import InviteFriend from "./User/InviteFriend";
+import ReserveLecture from "./User/ReserveLecture";
+import PrivacyPolicy from "./User/PrivacyPolicy";
+import GiftStore from "./User/GiftStore";
 
 export {
   Onboarding1,
@@ -15,6 +20,11 @@ export {
   Signup,
   ForgetPassword,
   OTP,
-
+  
   AllModules,
+  Profile,
+  InviteFriend,
+  ReserveLecture,
+  PrivacyPolicy,
+  GiftStore,
 }

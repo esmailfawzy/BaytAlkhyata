@@ -115,7 +115,7 @@ const Login = (): React.JSX.Element => {
               backgroundColor={COLORS.white}
               title="تسجيل الدخول"
               onPress={() => {
-                navigation.navigate('UserDrawer', {
+                navigation.replace('UserDrawer', {
                   screen: 'AllModules',
                 });
               }}

@@ -130,7 +130,11 @@ const Signup = () => {
             <CustomBtn
               backgroundColor={COLORS.main}
               title="انشاء الحساب"
-              onPress={() => {}}
+              onPress={() => {
+                navigation.replace('UserDrawer', {
+                  screen: 'AllModules',
+                });
+              }}
               titleColor={COLORS.white}
             />
           </View>
