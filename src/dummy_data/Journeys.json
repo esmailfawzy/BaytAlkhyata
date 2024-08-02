@@ -3,7 +3,7 @@
     "_id": "66abaf418981bac8fab05dc0",
     "index": 0,
     "guid": "299da82a-eded-4608-9319-805bedff7f83",
-    "isActive": false,
+    "isActive": true,
     "balance": "$3,731.11",
     "color": "#5EA6FA1A",
     "borderColor": "#5EA6FA",
@@ -18,7 +18,7 @@
     "balance": "$2,656.40",
     "color": "#CB2DC41A",
     "borderColor": "#CB2DC4",
-    "title": "الدبلومة الشاملة",
+    "title": "الخياطة للاطفال",
     "description": "رحلة تعلم الخياطة هي مغامرة مليئة بالإبداع والتحدي، حيث تتحول الأفكار إلى أزياء. "
   },
   {
@@ -36,7 +36,7 @@
     "_id": "66abaf411b77bcb210d0a462",
     "index": 3,
     "guid": "b16316cf-8f55-4d72-8402-0c596c5cf8b4",
-    "isActive": true,
+    "isActive": false,
     "balance": "$1,043.18",
     "color": "#FFE3BF4D",
     "borderColor": "#FAB65E",
@@ -47,7 +47,7 @@
     "_id": "66abaf418df0ea6ce56322e9",
     "index": 4,
     "guid": "4b76dc97-218e-448f-9316-3a6b274db782",
-    "isActive": true,
+    "isActive": false,
     "balance": "$1,641.21",
     "color": "#5EA6FA1A",
     "borderColor": "#5EA6FA",
@@ -62,50 +62,6 @@
     "balance": "$3,995.40",
     "color": "#5EA6FA1A",
     "borderColor": "#5EA6FA",
-    "title": "الدبلومة الشاملة",
-    "description": "رحلة تعلم الخياطة هي مغامرة مليئة بالإبداع والتحدي، حيث تتحول الأفكار إلى أزياء. "
-  },
-  {
-    "_id": "66abaf4161a92c5564c3477c",
-    "index": 6,
-    "guid": "de449d50-d7ed-42d8-8f8a-09205a0b7006",
-    "isActive": false,
-    "balance": "$2,632.35",
-    "color": "#C9472B1A",
-    "borderColor": "#C9472B",
-    "title": "الدبلومة الشاملة",
-    "description": "رحلة تعلم الخياطة هي مغامرة مليئة بالإبداع والتحدي، حيث تتحول الأفكار إلى أزياء. "
-  },
-  {
-    "_id": "66abaf41c7dea1f5213c8a4c",
-    "index": 7,
-    "guid": "b66e21b9-7850-4aac-9b52-039b8eb8254b",
-    "isActive": true,
-    "balance": "$1,378.75",
-    "color": "#5EA6FA1A",
-    "borderColor": "#5EA6FA",
-    "title": "الدبلومة الشاملة",
-    "description": "رحلة تعلم الخياطة هي مغامرة مليئة بالإبداع والتحدي، حيث تتحول الأفكار إلى أزياء. "
-  },
-  {
-    "_id": "66abaf410bc8f1d2397bddb1",
-    "index": 8,
-    "guid": "a30a49f7-2e2f-42b4-b60f-e603e4149860",
-    "isActive": false,
-    "balance": "$2,668.31",
-    "color": "#5EA6FA1A",
-    "borderColor": "#5EA6FA",
-    "title": "الدبلومة الشاملة",
-    "description": "رحلة تعلم الخياطة هي مغامرة مليئة بالإبداع والتحدي، حيث تتحول الأفكار إلى أزياء. "
-  },
-  {
-    "_id": "66abaf413be39d3109ff47b2",
-    "index": 9,
-    "guid": "e9ca2978-ee47-4a02-9aaf-28715de988f3",
-    "isActive": true,
-    "balance": "$3,003.43",
-    "color": "#FFE3BF4D",
-    "borderColor": "#FAB65E",
     "title": "الدبلومة الشاملة",
     "description": "رحلة تعلم الخياطة هي مغامرة مليئة بالإبداع والتحدي، حيث تتحول الأفكار إلى أزياء. "
   }

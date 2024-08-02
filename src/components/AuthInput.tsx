@@ -46,7 +46,7 @@ const AuthInput = (props: KnownProps): React.JSX.Element => {
           justifyContent: 'center',
           borderRadius: props.borderRadius || 35,
         },
-        Platform.OS == 'ios' ? {...iosShadow} : {elevation: 5},
+        Platform.OS == 'ios' ? {...iosShadow} : {elevation: 4},
       ]}>
       <TextInput
         placeholder={props.placeholder}

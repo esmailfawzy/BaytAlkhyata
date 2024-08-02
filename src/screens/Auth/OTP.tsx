@@ -99,7 +99,7 @@ const OTP = () => {
                 key={index}
                 style={[
                   styles.box,
-                  Platform.OS == 'ios' ? {...iosShadow} : {elevation: 5},
+                  Platform.OS == 'ios' ? {...iosShadow} : {elevation: 4},
                 ]}
                 maxLength={1}
                 keyboardType="numeric"

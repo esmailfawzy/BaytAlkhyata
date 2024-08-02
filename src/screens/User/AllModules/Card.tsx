@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {RPH, RPW} from '../../../utils/ScreenSize';
 import {FONTS} from '../../../constants/Fonts';
@@ -12,25 +12,37 @@ interface KnownTypes {
   id: number;
 }
 
+const iosShadow = {
+  shadowOpacity: 0.2,
+  shadowColor: '#080808',
+  shadowOffset: {
+    height: 0,
+    width: 0,
+  },
+};
+
 const Card = ({item, id}: KnownTypes) => {
   const navigation = useNavigation();
   return (
     <View
       key={item._id}
-      style={{
-        borderRadius: 10,
-        width: '100%',
-        height: RPH(22),
-        backgroundColor: item.color,
-        marginBottom: RPH(3),
-        borderBottomWidth: 3,
-        borderEndWidth: 3,
-        padding: RPW(4),
-        borderColor: item.borderColor,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}>
+      style={[
+        {
+          borderRadius: 10,
+          width: '100%',
+          height: RPH(22),
+          backgroundColor: item.color,
+          marginBottom: RPH(3),
+          borderBottomWidth: 3,
+          borderEndWidth: 3,
+          padding: RPW(4),
+          borderColor: item.borderColor,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        },
+        Platform.OS == 'ios' ? {...iosShadow} : {elevation: 0},
+      ]}>
       <View
         style={{
           width: '50%',
