@@ -62,10 +62,12 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
             title={'المكتبة'}
             icon={<DrawerIcons.LibraryIcon />}
             color={
-              currentRouteName == 'AllModules' ? '#FF780040' : COLORS.white
+              currentRouteName == 'LibraryStack' ? '#FF780040' : COLORS.white
             }
             onPress={() => {
-              props.navigation.jumpTo('AllModules');
+              props.navigation.jumpTo('LibraryStack', {
+                screen: 'AllModules',
+              });
             }}
           />
           <DrawerBtn

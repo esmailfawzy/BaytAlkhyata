@@ -14,6 +14,8 @@ import {DrawerIcons} from '../../assets/icons/DrawerIcons';
 import {RPW} from '../../utils/ScreenSize';
 import MenuIcon from '../../assets/icons/MenuIcon';
 import {CONSTANTS} from '../../constants/Constants';
+import {COLORS} from '../../constants/Colors';
+import LibraryStack from '../stacks/LibraryStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -25,9 +27,12 @@ export default function UserDrawer() {
         headerTitle: '',
         header: props => (
           <SafeAreaView
-            style={{
-              width: RPW(100),
-            }}>
+            style={
+              {
+                width: RPW(100),
+                
+              }
+            }>
             <View
               style={{
                 width: RPW(100),
@@ -40,6 +45,7 @@ export default function UserDrawer() {
                 alignSelf: 'center',
                 borderBottomColor: '#D9D9D9',
                 borderBottomWidth: 1,
+                backgroundColor: COLORS.white,
               }}>
               <TouchableOpacity
                 activeOpacity={CONSTANTS.activeOpacity}
@@ -53,9 +59,9 @@ export default function UserDrawer() {
           </SafeAreaView>
         ),
       }}
-      initialRouteName="AllModules"
+      initialRouteName="LibraryStack"
       drawerContent={props => <DrawerContent {...props} />}>
-      <Drawer.Screen name="AllModules" component={AllModules} />
+      <Drawer.Screen name="LibraryStack" component={LibraryStack} />
       <Drawer.Screen name="Profile" component={Profile} />
       <Drawer.Screen name="InviteFriend" component={InviteFriend} />
       <Drawer.Screen name="ReserveLecture" component={ReserveLecture} />
