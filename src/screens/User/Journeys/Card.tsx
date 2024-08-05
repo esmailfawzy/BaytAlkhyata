@@ -38,7 +38,7 @@ const Card = ({item, id}: KnownTypes) => {
       disabled={!item.isActive}
       activeOpacity={CONSTANTS.activeOpacity}
       onPress={() => {
-        SheetManager.show('snap-me');
+        SheetManager.show('course-overview');
       }}
       key={item._id}
       style={[
@@ -122,7 +122,7 @@ const Card = ({item, id}: KnownTypes) => {
           disabled={!item.isActive}
           activeOpacity={CONSTANTS.activeOpacity}
           onPress={() => {
-            SheetManager.show('snap-me');
+            SheetManager.show('course-overview');
           }}
           style={{
             height: 37,
