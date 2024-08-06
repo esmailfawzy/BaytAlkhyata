@@ -1,10 +1,10 @@
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {COLORS} from '../../../constants/Colors';
-import {RPW} from '../../../utils/ScreenSize';
-import JourneysData from '../../../dummy_data/Journeys.json';
+import JourneysData from '../../../../dummy_data/Journeys.json';
 import {useNavigation} from '@react-navigation/native';
 import Card from './Card';
+import {COLORS} from '../../../../constants/Colors';
+import {RPW} from '../../../../utils/ScreenSize';
 
 const Journeys = (): React.JSX.Element => {
   const navigation = useNavigation();

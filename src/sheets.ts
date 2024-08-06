@@ -1,5 +1,5 @@
 import {RouteDefinition, SheetDefinition, registerSheet} from 'react-native-actions-sheet';
-import CourseOverview from './screens/User/Journeys/CourseOverview';
+import CourseOverview from './screens/User/Drawer/Journeys/CourseOverview';
 
 
 // Register your Sheet component.

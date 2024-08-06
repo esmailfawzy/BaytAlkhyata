@@ -8,15 +8,15 @@ import {
 } from 'react-native';
 import React from 'react';
 import {useSheetRouteParams, useSheetRouter} from 'react-native-actions-sheet';
-import {RPW} from '../../../utils/ScreenSize';
-import {COLORS} from '../../../constants/Colors';
-import {FONTS} from '../../../constants/Fonts';
-import Wallet from '../../../assets/icons/PaymentIcons/Wallet';
-import Visa from '../../../assets/icons/PaymentIcons/Visa';
-import Paypal from '../../../assets/icons/PaymentIcons/Paypal';
-import ChevronRight from '../../../assets/icons/ChevronRight';
-import Whatsapp from '../../../assets/icons/PaymentIcons/Whatsapp';
-import {CONSTANTS} from '../../../constants/Constants';
+import Wallet from '../../../../assets/icons/PaymentIcons/Wallet';
+import Visa from '../../../../assets/icons/PaymentIcons/Visa';
+import Paypal from '../../../../assets/icons/PaymentIcons/Paypal';
+import {RPW} from '../../../../utils/ScreenSize';
+import {COLORS} from '../../../../constants/Colors';
+import {FONTS} from '../../../../constants/Fonts';
+import {CONSTANTS} from '../../../../constants/Constants';
+import ChevronRight from '../../../../assets/icons/ChevronRight';
+import Whatsapp from '../../../../assets/icons/PaymentIcons/Whatsapp';
 
 const Btns: [
   {

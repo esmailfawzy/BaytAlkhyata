@@ -5,13 +5,14 @@ import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
 import ForgetPassword from "./Auth/ForgetPassword";
 import OTP from "./Auth/OTP";
-import AllModules from "./User/AllModules/AllModules";
-import Profile from "./User/Profile";
-import InviteFriend from "./User/InviteFriend";
-import ReserveLecture from "./User/ReserveLecture";
-import PrivacyPolicy from "./User/PrivacyPolicy";
-import GiftStore from "./User/GiftStore";
-import Journeys from "./User/Journeys/Journeys";
+import Profile from "./User/Drawer/Profile";
+import InviteFriend from "./User/Drawer/InviteFriend";
+import ReserveLecture from "./User/Drawer/ReserveLecture";
+import PrivacyPolicy from "./User/Drawer/PrivacyPolicy";
+import GiftStore from "./User/Drawer/GiftStore";
+import Journeys from "./User/Drawer/Journeys/Journeys";
+import AllModules from "./User/Drawer/AllModules/AllModules";
+
 
 
 export {

@@ -7,15 +7,15 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {RPH, RPW} from '../../../utils/ScreenSize';
-import {FONTS} from '../../../constants/Fonts';
-import {DymmyImgs} from '../../../assets/imgs/AllModules';
-import {COLORS} from '../../../constants/Colors';
-import {CONSTANTS} from '../../../constants/Constants';
-import {useNavigation} from '@react-navigation/native';
-import SaveIcon from '../../../assets/icons/SaveIcon';
-import {IMGS} from '../../../assets';
+
 import {SheetManager} from 'react-native-actions-sheet';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {CONSTANTS} from '../../../../constants/Constants';
+import {RPH, RPW} from '../../../../utils/ScreenSize';
+import {COLORS} from '../../../../constants/Colors';
+import {IMGS} from '../../../../assets';
+import {FONTS} from '../../../../constants/Fonts';
+import SaveIcon from '../../../../assets/icons/SaveIcon';
 
 interface KnownTypes {
   item: any;
@@ -31,8 +31,11 @@ const iosShadow = {
   },
 };
 
+type RootStackParamList = {
+  JourneyTabBar: {screen: string} | undefined;
+};
 const Card = ({item, id}: KnownTypes) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <TouchableOpacity
       disabled={!item.isActive}
@@ -122,7 +125,11 @@ const Card = ({item, id}: KnownTypes) => {
           disabled={!item.isActive}
           activeOpacity={CONSTANTS.activeOpacity}
           onPress={() => {
-            SheetManager.show('course-overview');
+            item.owned
+              ? navigation.navigate('JourneyTabBar', {
+                  screen: 'JourneyHome',
+                })
+              : SheetManager.show('course-overview');
           }}
           style={{
             height: 37,
@@ -138,7 +145,7 @@ const Card = ({item, id}: KnownTypes) => {
               fontWeight: '500',
               color: COLORS.white,
             }}>
-            معرفة المزيد عن الدبلومة
+            {item.owned ? 'تكملة رحلة التعلم' : 'معرفة المزيد عن الدبلومة'}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -152,7 +159,7 @@ const Card = ({item, id}: KnownTypes) => {
             backgroundColor: 'transparent',
             padding: 10,
             borderRadius: 8,
-            borderWidth: 1,
+            borderWidth: item.owned ? 0 : 1,
             borderColor: '#FAB65E',
           }}>
           <Text
@@ -161,7 +168,7 @@ const Card = ({item, id}: KnownTypes) => {
               fontWeight: '500',
               color: '#FAB65E',
             }}>
-            شراء
+            {item.owned ? '50%' : 'شراء'}
           </Text>
         </TouchableOpacity>
       </View>

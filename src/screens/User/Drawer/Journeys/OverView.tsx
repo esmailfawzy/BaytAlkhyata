@@ -6,17 +6,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useRef} from 'react';
+import React, {RefObject, useRef} from 'react';
 import {
   SheetManager,
   useSheetRef,
   useSheetRouter,
 } from 'react-native-actions-sheet';
-import CustomVideoPlayer from '../Video/CustomViedeoPlayer';
-import {RPW} from '../../../utils/ScreenSize';
-import {COLORS} from '../../../constants/Colors';
-import {FONTS} from '../../../constants/Fonts';
-import {CONSTANTS} from '../../../constants/Constants';
+import {RPW} from '../../../../utils/ScreenSize';
+import {COLORS} from '../../../../constants/Colors';
+import CustomVideoPlayer from '../../Video/CustomViedeoPlayer';
+import {FONTS} from '../../../../constants/Fonts';
+import {CONSTANTS} from '../../../../constants/Constants';
 
 const OverView = () => {
   const router = useSheetRouter('course-overview');

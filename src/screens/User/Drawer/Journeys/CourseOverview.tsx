@@ -8,10 +8,6 @@ import {
 } from 'react-native';
 import React, {useRef} from 'react';
 import ActionSheet, {Route, useSheetRef} from 'react-native-actions-sheet';
-import CustomVideoPlayer from '../Video/CustomViedeoPlayer';
-import {RPW} from '../../../utils/ScreenSize';
-import {COLORS} from '../../../constants/Colors';
-import {FONTS} from '../../../constants/Fonts';
 import OverView from './OverView';
 import Payments from './Payments';
 

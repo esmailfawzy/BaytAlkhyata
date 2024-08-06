@@ -1,11 +1,12 @@
 import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {RPH, RPW} from '../../../utils/ScreenSize';
-import {FONTS} from '../../../constants/Fonts';
-import {DymmyImgs} from '../../../assets/imgs/AllModules';
-import {COLORS} from '../../../constants/Colors';
-import {CONSTANTS} from '../../../constants/Constants';
-import {useNavigation} from '@react-navigation/native';
+
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RPH, RPW} from '../../../../utils/ScreenSize';
+import {FONTS} from '../../../../constants/Fonts';
+import {CONSTANTS} from '../../../../constants/Constants';
+import {COLORS} from '../../../../constants/Colors';
+import {DymmyImgs} from '../../../../assets/imgs/AllModules';
 
 interface KnownTypes {
   item: any;
@@ -21,8 +22,11 @@ const iosShadow = {
   },
 };
 
+type RootStackParamList = {
+  LibraryStack: {screen: string} | undefined;
+};
 const Card = ({item, id}: KnownTypes) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <View
       key={item._id}

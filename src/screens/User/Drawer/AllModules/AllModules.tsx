@@ -7,12 +7,10 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {COLORS} from '../../../constants/Colors';
-import {RPH, RPW} from '../../../utils/ScreenSize';
-import {DymmyImgs} from '../../../assets/imgs/AllModules';
-import DummyData from '../../../dummy_data/AllModules.json';
-import {FONTS} from '../../../constants/Fonts';
 import Card from './Card';
+import DummyData from '../../../../dummy_data/AllModules.json';
+import {COLORS} from '../../../../constants/Colors';
+import {RPW} from '../../../../utils/ScreenSize';
 
 const AllModules = () => {
   return (

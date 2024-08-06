@@ -18,7 +18,6 @@ import {CONSTANTS} from '../../constants/Constants';
 import {FONTS} from '../../constants/Fonts';
 import {AuthInput, CustomBtn} from '../../components';
 import Ellipse from '../../assets/icons/Ellipse';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
 
 const iosShadow = {
   shadowOpacity: 0.2,
