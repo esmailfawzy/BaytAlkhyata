@@ -32,16 +32,20 @@ const iosShadow = {
 };
 
 type RootStackParamList = {
-  JourneyTabBar: {screen: string} | undefined;
+  JourneyHome: any;
 };
+
 const Card = ({item, id}: KnownTypes) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  // const navigation = useNavigation();
   return (
     <TouchableOpacity
       disabled={!item.isActive}
       activeOpacity={CONSTANTS.activeOpacity}
       onPress={() => {
-        SheetManager.show('course-overview');
+        item.owned
+          ? navigation.navigate('JourneyHome')
+          : SheetManager.show('course-overview');
       }}
       key={item._id}
       style={[
@@ -80,7 +84,6 @@ const Card = ({item, id}: KnownTypes) => {
               textAlign: 'left',
               fontFamily: FONTS.Manuale,
               fontSize: 20,
-
               fontWeight: '700',
               color: '#FAB65E',
             }}>
@@ -126,9 +129,7 @@ const Card = ({item, id}: KnownTypes) => {
           activeOpacity={CONSTANTS.activeOpacity}
           onPress={() => {
             item.owned
-              ? navigation.navigate('JourneyTabBar', {
-                  screen: 'JourneyHome',
-                })
+              ? navigation.navigate('JourneyHome')
               : SheetManager.show('course-overview');
           }}
           style={{

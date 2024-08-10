@@ -17,6 +17,7 @@
 		C8673FBB71AC411C8897352C /* Manuale-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0CB694080B84D2AB269BB53 /* Manuale-Italic-VariableFont_wght.ttf */; };
 		E9BE9A5F5FE229037B0E3F21 /* Pods_Saltus_SaltusTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE596A57D0B01DE150107C73 /* Pods_Saltus_SaltusTests.framework */; };
 		EC17568D22026F23A7CA9FC2 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 62D2EB504587377D0F055422 /* PrivacyInfo.xcprivacy */; };
+		A6D461D5E3544B1D81312D2A /* Manuale-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15548F580B5B46E8BA994345 /* Manuale-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		E0CB694080B84D2AB269BB53 /* Manuale-Italic-VariableFont_wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Manuale-Italic-VariableFont_wght.ttf"; path = "../src/assets/fonts/Manuale-Italic-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FE596A57D0B01DE150107C73 /* Pods_Saltus_SaltusTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saltus_SaltusTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		15548F580B5B46E8BA994345 /* Manuale-Regular.ttf */ = {isa = PBXFileReference; name = "Manuale-Regular.ttf"; path = "../src/assets/fonts/Manuale-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 			children = (
 				E0CB694080B84D2AB269BB53 /* Manuale-Italic-VariableFont_wght.ttf */,
 				DF4F4988D36645BB95A43ED3 /* Manuale.ttf */,
+				15548F580B5B46E8BA994345 /* Manuale-Regular.ttf */,
 			);
 			name = Resources;
 			path = "";
@@ -266,6 +269,7 @@
 				EC17568D22026F23A7CA9FC2 /* PrivacyInfo.xcprivacy in Resources */,
 				C8673FBB71AC411C8897352C /* Manuale-Italic-VariableFont_wght.ttf in Resources */,
 				197117CEE6D9441A83519A3C /* Manuale.ttf in Resources */,
+				A6D461D5E3544B1D81312D2A /* Manuale-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,7 +23,7 @@ const iosShadow = {
 };
 
 type RootStackParamList = {
-  LibraryStack: {screen: string} | undefined;
+  JourneyTabBar: {screen: string} | undefined;
 };
 const Card = ({item, id}: KnownTypes) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -77,7 +77,7 @@ const Card = ({item, id}: KnownTypes) => {
         <TouchableOpacity
           activeOpacity={CONSTANTS.activeOpacity}
           onPress={() => {
-            navigation.navigate('LibraryStack', {
+            navigation.navigate('JourneyTabBar', {
               screen: 'Journeys',
             });
           }}
