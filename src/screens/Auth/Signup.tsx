@@ -59,7 +59,9 @@ const Signup = () => {
             <TouchableOpacity
               activeOpacity={CONSTANTS.activeOpacity}
               onPress={() => {
-                navigation.goBack();
+                navigation.navigate('OnboardingStack', {
+                  screen: 'Onboarding2',
+                });
               }}>
               <ChevronRight />
             </TouchableOpacity>
