@@ -1,10 +1,13 @@
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {RPH} from '../../../../utils/ScreenSize';
+import {RPH, RPW} from '../../../../utils/ScreenSize';
 import {COLORS} from '../../../../constants/Colors';
+import ProgressBar from '../../../../components/ProgressBar';
+import {FONTS} from '../../../../constants/Fonts';
+import StarIcon from '../../../../assets/icons/StarIcon';
 
 const iosShadow = {
-  shadowOpacity: 0.2,
+  shadowOpacity: 0.15,
   shadowColor: '#080808',
   shadowOffset: {
     height: 0,
@@ -22,16 +25,72 @@ const CourseOverviewCard = () => {
           borderRadius: 10,
           borderEndWidth: 5,
           borderEndColor: '#FAB65E',
-          padding: 8,
+          padding: RPH(2),
           alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: RPH(4),
         },
-        Platform.OS == 'ios' ? {...iosShadow} : {elevation: 4},
+        Platform.OS == 'ios' ? {...iosShadow} : {elevation: 0},
       ]}>
-      <Text>CourseOverviewCard{RPH(15)}</Text>
+      <ProgressBar progress={65} />
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '95%',
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '30%',
+          }}>
+          <StarIcon />
+          <Text style={styles.title}>عدد النقاط</Text>
+        </View>
+        <Text style={[styles.subTitle, {color: COLORS.main}]}>524</Text>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '95%',
+          // marginVertical: RPW(2),
+        }}>
+        <Text style={styles.title}>مجموع الساعات</Text>
+        <Text style={styles.subTitle}>524</Text>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '95%',
+          // marginVertical: RPW(2),
+        }}>
+        <Text style={styles.title}>مجموع المشاهدات</Text>
+        <Text style={styles.subTitle}>524</Text>
+      </View>
     </View>
   );
 };
 
 export default CourseOverviewCard;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  title: {
+    fontSize: RPW(3),
+    color: '#B7B7B7',
+    fontFamily: FONTS.Manuale,
+    fontWeight: '600',
+  },
+  subTitle: {
+    color: '#434343',
+    fontFamily: FONTS.Manuale,
+    fontSize: RPW(3),
+    fontWeight: '600',
+  },
+});

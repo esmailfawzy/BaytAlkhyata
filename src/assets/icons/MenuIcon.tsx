@@ -2,8 +2,8 @@ import * as React from 'react';
 import Svg, {Line} from 'react-native-svg';
 const MenuIcon = (): React.JSX.Element => (
   <Svg
-    width={16}
-    height={13}
+    width={20}
+    height={17}
     viewBox="0 0 16 13"
     fill="none"
     xmlns="http://www.w3.org/2000/svg">

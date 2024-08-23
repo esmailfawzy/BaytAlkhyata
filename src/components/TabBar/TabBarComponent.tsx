@@ -41,8 +41,8 @@ const TabBarComponent = ({
       <View
         style={[
           {
-            paddingHorizontal: RPW(6),
-            paddingVertical: RPW(4),
+            paddingHorizontal: RPW(3),
+            paddingVertical: RPW(2),
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-around',
@@ -86,21 +86,29 @@ const TabBarComponent = ({
               onPress={onPress}
               options={options}
               key={index}>
-              {label == 'Notifications' && (
+              {label == 'Notifications' ? (
                 <NotificationIcon
                   color={isFocused ? COLORS.white : COLORS.black}
                 />
+              ) : (
+                <></>
               )}
-              {label == 'JourneyStack' && (
+              {label == 'JourneyStack' ? (
                 <HomeIcon color={isFocused ? COLORS.white : COLORS.black} />
+              ) : (
+                <></>
               )}
-              {label == 'PlayVideoStack' && (
+              {label == 'PlayVideoStack' ? (
                 <PlayIcon color={isFocused ? COLORS.white : COLORS.black} />
+              ) : (
+                <></>
               )}
-              {label == 'ContactUs' && (
+              {label == 'ContactUs' ? (
                 <ContactusIcon
                   color={isFocused ? COLORS.white : COLORS.black}
                 />
+              ) : (
+                <></>
               )}
             </TabBarBtn>
           );

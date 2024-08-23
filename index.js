@@ -8,5 +8,6 @@ import { name as appName } from './app.json';
 import './gesture-handler.native';
 
 I18nManager.forceRTL(true);
+I18nManager.allowRTL(true);
 
 AppRegistry.registerComponent(appName, () => App);

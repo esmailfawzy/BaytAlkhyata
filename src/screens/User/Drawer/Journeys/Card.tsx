@@ -52,7 +52,7 @@ const Card = ({item, id}: KnownTypes) => {
         {
           borderRadius: 10,
           width: '100%',
-          height: RPH(22),
+          minHeight: RPH(22),
           backgroundColor: item.isActive ? COLORS.white : '#79797933',
           opacity: item.isActive ? 1 : 0.6,
           marginBottom: RPH(3),

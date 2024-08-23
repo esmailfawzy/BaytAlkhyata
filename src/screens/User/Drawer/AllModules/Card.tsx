@@ -34,7 +34,7 @@ const Card = ({item, id}: KnownTypes) => {
         {
           borderRadius: 10,
           width: '100%',
-          height: RPH(22),
+          minHeight: RPH(22),
           backgroundColor: item.color,
           marginBottom: RPH(3),
           borderBottomWidth: 3,

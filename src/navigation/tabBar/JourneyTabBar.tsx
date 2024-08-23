@@ -12,9 +12,9 @@ const JourneyTabBar = () => {
   return (
     <Tab.Navigator
       initialRouteName="JourneyStack"
-      safeAreaInsets={{
-        bottom: RPW(8),
-      }}
+      // safeAreaInsets={{
+      //   bottom: RPW(8),
+      // }}
       screenOptions={{
         headerShown: false,
       }}

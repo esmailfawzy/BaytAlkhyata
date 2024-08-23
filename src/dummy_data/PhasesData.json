@@ -1,0 +1,92 @@
+[
+  {
+    "_id": "66abaf418cf70008a1d8beed",
+    "index": 1,
+    "isActive": true,
+    "title": "رحلة التعليم",
+    "totalExams": 15,
+    "passedExams": 7,
+    "totalPoints": 524
+  },
+  {
+    "_id": "66bbcf418cf70008a2e9bf34",
+    "index": 2,
+    "isActive": false,
+    "title": "التعليم المستمر",
+    "totalExams": 20,
+    "passedExams": 18,
+    "totalPoints": 524
+  },
+  {
+    "_id": "66ccdf418cf70008b3f8cg45",
+    "index": 3,
+    "isActive": false,
+    "title": "رحلة النجاح",
+    "totalExams": 10,
+    "passedExams": 9,
+    "totalPoints": 524
+  },
+  {
+    "_id": "66ddef518cf70008c4h9di56",
+    "index": 4,
+    "isActive": false,
+    "title": "التحديات الأكاديمية",
+    "totalExams": 12,
+    "passedExams": 6,
+    "totalPoints": 524
+  },
+  {
+    "_id": "66eef6228cf70008d5jaek67",
+    "index": 5,
+    "isActive": false,
+    "title": "استكشاف المعرفة",
+    "totalExams": 25,
+    "passedExams": 22,
+    "totalPoints": 524
+  },
+  {
+    "_id": "66fffe118cf70008e6lbfl78",
+    "index": 6,
+    "isActive": false,
+    "title": "تطوير الذات",
+    "totalExams": 18,
+    "passedExams": 10,
+    "totalPoints": 524
+  },
+  {
+    "_id": "6711ge918cf70008f7mcbg89",
+    "index": 7,
+    "isActive": false,
+    "title": "تحقيق الطموح",
+    "totalExams": 30,
+    "passedExams": 25,
+    "totalPoints": 524
+  },
+  {
+    "_id": "6722bf418cf7000808ndcj90",
+    "index": 8,
+    "isActive": false,
+    "title": "الرحلة التعليمية",
+    "totalExams": 14,
+    "passedExams": 9,
+    "totalPoints": 524
+  },
+  {
+    "_id": "6733df418cf7000819oeck01",
+    "index": 9,
+    "isActive": false,
+    "title": "التفوق العلمي",
+    "totalExams": 22,
+    "passedExams": 21,
+    "totalPoints": 524
+  },
+  {
+    "_id": "6744cf518cf7000829pfcl12",
+    "index": 10,
+    "isActive": false,
+    "title": "المعرفة والقوة",
+    "totalExams": 17,
+    "passedExams": 12,
+    "totalPoints": 524
+  }
+]

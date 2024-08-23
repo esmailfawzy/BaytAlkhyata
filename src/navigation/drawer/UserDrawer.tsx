@@ -27,18 +27,15 @@ export default function UserDrawer() {
         headerTitle: '',
         header: props => (
           <SafeAreaView
-            style={
-              {
-                width: RPW(100),
-                
-              }
-            }>
+            style={{
+              width: RPW(100),
+            }}>
             <View
               style={{
                 width: RPW(100),
                 paddingHorizontal: RPW(8),
                 paddingBottom: RPW(3),
-                paddingTop: Platform.OS == 'android' ? RPW(3) : 0,
+                paddingTop: RPW(3),
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
