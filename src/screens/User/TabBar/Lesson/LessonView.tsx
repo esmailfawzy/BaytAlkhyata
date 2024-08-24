@@ -1,7 +1,16 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {
+  ActivityIndicator,
+  Button,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {RPH, RPW} from '../../../../utils/ScreenSize';
 import {COLORS} from '../../../../constants/Colors';
+import CustomTrackPlayer from '../../../../components/CustomTrackPlayer';
 
 interface KnownTypes {
   currentStep: number;
@@ -10,88 +19,7 @@ interface KnownTypes {
 const LessonView = ({currentStep}: KnownTypes) => {
   return (
     <View style={[styles.container]}>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text>{currentStep} Lesson Text</Text>
-      <Text
-        style={{
-          marginVertical: 40,
-          color: COLORS.white,
-        }}>
-        {currentStep} Final Lesson Text
-      </Text>
+      <CustomTrackPlayer />
     </View>
   );
 };
@@ -105,6 +33,6 @@ const styles = StyleSheet.create({
     width: '100%',
     // alignSelf: 'center',
     alignItems: 'center',
-    backgroundColor: 'dodgerblue',
+    backgroundColor: COLORS.white,
   },
 });
