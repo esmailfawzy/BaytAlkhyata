@@ -23,15 +23,17 @@ export async function setupPlayer() {
         Capability.SkipToNext,
         Capability.SkipToPrevious,
         Capability.SeekTo,
+        Capability.SetRating,
       ],
       compactCapabilities: [
         Capability.Play,
         Capability.Pause,
         Capability.SkipToNext,
+        Capability.SetRating,
       ],
       progressUpdateEventInterval: 2,
     });
-
+    TrackPlayer.setVolume(1);
     isSetup = true;
   } finally {
     return isSetup;

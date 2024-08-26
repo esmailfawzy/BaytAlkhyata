@@ -12,6 +12,7 @@ import {COLORS} from '../../../../constants/Colors';
 import LessonArrow from '../../../../assets/icons/Lesson/LessonArrow';
 import LessonQuiz from '../../../../assets/icons/Lesson/LessonQuiz';
 import LessonView from './LessonView';
+import {CustomBtn} from '../../../../components';
 
 const Lesson = () => {
   const [activeStep, setActiveStep] = useState(1);
@@ -39,10 +40,10 @@ const Lesson = () => {
                 styles.circle,
                 isActive && styles.activeCircle,
                 activeStep == step && {
-                  width: 45,
-                  height: 45,
+                  width: RPW(10),
+                  height: RPW(10),
                   backgroundColor: COLORS.main,
-                  borderRadius: 45,
+                  borderRadius: RPW(10),
                 },
               ]}>
               <Text style={[styles.label, isActive && styles.activeLabel]}>
@@ -93,9 +94,9 @@ const Lesson = () => {
                 styles.circle,
                 isActive && styles.activeCircle,
                 activeStep == step && {
-                  width: 45,
-                  height: 45,
-                  borderRadius: 45,
+                  width: RPW(10),
+                  height: RPW(10),
+                  borderRadius: RPW(10),
                 },
                 {
                   borderWidth: 1,
@@ -160,8 +161,24 @@ const Lesson = () => {
           {renderStep(5)}
         </View>
         <ScrollView>
-          <LessonView currentStep={activeStep} />
+          <LessonView currentStep={activeStep} setActiveStep={setActiveStep} />
         </ScrollView>
+        {activeStep < 5 ? (
+          <View style={{width: '95%', marginTop: 20, alignSelf: 'center'}}>
+            <CustomBtn
+              backgroundColor={COLORS.white}
+              borderRadius={10}
+              borderWidth={1}
+              title="التالي"
+              titleColor={COLORS.main}
+              onPress={() => {
+                if (activeStep < 5) setActiveStep(activeStep + 1);
+              }}
+            />
+          </View>
+        ) : (
+          <></>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -192,8 +209,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   circle: {
-    width: 40,
-    height: 40,
+    width: RPW(9),
+    height: RPW(9),
     borderRadius: 20,
     backgroundColor: '#FAB65E7D',
     justifyContent: 'center',

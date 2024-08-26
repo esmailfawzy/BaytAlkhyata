@@ -45,7 +45,13 @@ export default function UserDrawer() {
                 backgroundColor: COLORS.white,
               }}>
               <TouchableOpacity
-                activeOpacity={CONSTANTS.activeOpacity}
+                // activeOpacity={CONSTANTS.activeOpacity}
+                style={{
+                  width: RPW(10),
+                  height: RPW(10),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
                 onPress={() => {
                   props.navigation.toggleDrawer();
                 }}>

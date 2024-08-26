@@ -8,6 +8,7 @@ export default styles = StyleSheet.create({
     width: '100%',
     height: RPW(48),
     alignSelf: 'center',
+    zIndex: 2,
   },
   controlRow: {
     flexDirection: 'row',

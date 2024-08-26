@@ -19,7 +19,7 @@ const CustomVideoPlayer = forwardRef(
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const videoPlayer = useRef(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [videoVolume, setVideoVolume] = useState(1.0);
     const [isControlsShown, setIsControlsShown] = useState(true);
 

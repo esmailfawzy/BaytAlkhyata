@@ -36,6 +36,7 @@ const CustomBtn = (props: props): React.JSX.Element => {
           fontSize: 15,
           fontWeight: Platform.OS == 'android' ? 'bold' : '400',
           color: props.titleColor || COLORS.white,
+          alignSelf: 'center',
         }}>
         {props.title}
       </Text>

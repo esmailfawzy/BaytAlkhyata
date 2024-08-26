@@ -3,6 +3,7 @@ import {
   Animated,
   Button,
   Dimensions,
+  GestureResponderEvent,
   Platform,
   StyleSheet,
   Text,
@@ -69,17 +70,25 @@ const CustomTrackPlayer = () => {
 
   const togglePlayer = async () => {
     if ((await TrackPlayer.getPlaybackState()).state == State.Playing) {
-      setPlaying(!playing);
+      setPlaying(false);
       TrackPlayer.pause();
     } else {
       TrackPlayer.play();
-      setPlaying(!playing);
+      setPlaying(true);
     }
   };
 
   const calculateActiveBars = () => {
     const percentagePlayed = progress.position / progress.duration || 0;
     return Math.floor(percentagePlayed * barsCount);
+  };
+
+  const onWaveformPress = async (event: GestureResponderEvent) => {
+    const {locationX} = event.nativeEvent;
+    const tappedBarIndex = Math.floor((locationX / SCREEN_WIDTH) * barsCount);
+    const seekPosition = (tappedBarIndex / barsCount) * progress.duration;
+
+    await TrackPlayer.seekTo(seekPosition);
   };
 
   const activeBars = calculateActiveBars();
@@ -121,6 +130,8 @@ const CustomTrackPlayer = () => {
 
         {/* Waveform */}
         <View
+          onStartShouldSetResponder={() => true}
+          onResponderGrant={onWaveformPress}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -167,8 +178,9 @@ const CustomTrackPlayer = () => {
             borderTopEndRadius: 10,
             borderBottomEndRadius: 10,
             padding: RPW(4),
+            height: RPH(7),
           }}>
-          {!playing ? (
+          {playing ? (
             <PauseIcon color={COLORS.white} />
           ) : (
             <PlayIcon color={COLORS.white} />
@@ -190,6 +202,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderRadius: 10,
     // borderWidth: 1,
-    height: RPH(6),
+    height: RPH(7),
   },
 });

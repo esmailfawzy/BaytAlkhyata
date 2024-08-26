@@ -39,10 +39,13 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
             props.navigation.toggleDrawer();
           }}
           style={{
+            width: RPW(10),
+            height: RPW(10),
+            alignItems: 'center',
+            justifyContent: 'center',
             marginBottom: RPH(6),
             alignSelf: 'flex-start',
-          }}
-          activeOpacity={CONSTANTS.activeOpacity}>
+          }}>
           <MenuIcon />
         </TouchableOpacity>
         <View
