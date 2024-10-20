@@ -13,14 +13,19 @@ import {COLORS} from '../../constants/Colors';
 import {IMGS} from '../../assets';
 import {RPH, RPW} from '../../utils/ScreenSize';
 import ChevronRight from '../../assets/icons/ChevronRight';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import LogoSvg from '../../assets/imgs/Logo';
 import {CONSTANTS} from '../../constants/Constants';
 import {FONTS} from '../../constants/Fonts';
 import {AuthInput, CustomBtn} from '../../components';
 
+type NavigatoinNames = {
+  OnboardingStack: {screen: string} | undefined;
+  UserDrawer: {screen: string} | undefined;
+};
+
 const Signup = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<NavigatoinNames>>();
   return (
     <SafeAreaView
       style={{

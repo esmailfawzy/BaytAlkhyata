@@ -12,15 +12,18 @@ interface props {
   titleColor?: string;
   borderWidth?: number;
   borderRadius?: number;
+  width?: string | number;
+  disabled?: boolean;
 }
 
 const CustomBtn = (props: props): React.JSX.Element => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
+      disabled={props.disabled}
       activeOpacity={CONSTANTS.activeOpacity}
       style={{
-        width: '100%',
+        width: props.width || '100%',
         padding: RPW(3),
         height: Platform.OS == 'android' ? 55 : 50,
         justifyContent: 'center',

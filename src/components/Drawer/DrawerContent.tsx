@@ -15,6 +15,7 @@ import {CONSTANTS} from '../../constants/Constants';
 import DrawerBtn from './DrawerBtn';
 import {DrawerIcons} from '../../assets/icons/DrawerIcons';
 import {COLORS} from '../../constants/Colors';
+import HomeIcon from '../../assets/icons/TabBarIcons/HomeIcon';
 
 const DrawerContent = (props: DrawerContentComponentProps) => {
   const navigation = useNavigation();
@@ -62,15 +63,21 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
             }}
           />
           <DrawerBtn
-            title={'المكتبة'}
-            icon={<DrawerIcons.LibraryIcon />}
-            color={
-              currentRouteName == 'LibraryStack' ? '#FF780040' : COLORS.white
-            }
+            title={'الرئيسية'}
+            icon={<HomeIcon color={COLORS.main} />}
+            color={currentRouteName == 'Main' ? '#FF780040' : COLORS.white}
             onPress={() => {
-              props.navigation.jumpTo('LibraryStack', {
+              props.navigation.jumpTo('Main', {
                 screen: 'AllModules',
               });
+            }}
+          />
+          <DrawerBtn
+            title={'المكتبة'}
+            icon={<DrawerIcons.LibraryIcon />}
+            color={currentRouteName == 'Library' ? '#FF780040' : COLORS.white}
+            onPress={() => {
+              props.navigation.jumpTo('Library');
             }}
           />
           <DrawerBtn

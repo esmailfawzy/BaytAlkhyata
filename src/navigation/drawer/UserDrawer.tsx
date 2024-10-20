@@ -16,6 +16,8 @@ import MenuIcon from '../../assets/icons/MenuIcon';
 import {CONSTANTS} from '../../constants/Constants';
 import {COLORS} from '../../constants/Colors';
 import LibraryStack from '../stacks/LibraryStack';
+import JourneyStack from '../stacks/JourneyStack';
+import Library from '../../screens/User/Drawer/Library/Library';
 
 const Drawer = createDrawerNavigator();
 
@@ -62,14 +64,23 @@ export default function UserDrawer() {
           </SafeAreaView>
         ),
       }}
-      initialRouteName="LibraryStack"
+      initialRouteName="Main"
       drawerContent={props => <DrawerContent {...props} />}>
-      <Drawer.Screen name="LibraryStack" component={LibraryStack} />
-      <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="Main" component={LibraryStack} />
+      <Drawer.Screen name="Library" component={Library} />
+      <Drawer.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Drawer.Screen name="InviteFriend" component={InviteFriend} />
       <Drawer.Screen name="ReserveLecture" component={ReserveLecture} />
       <Drawer.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
       <Drawer.Screen name="GiftStore" component={GiftStore} />
+
+      <Drawer.Screen name="JourneyStack" component={JourneyStack} />
     </Drawer.Navigator>
   );
 }

@@ -25,7 +25,7 @@ interface KnownTypes {
 const LessonView = ({currentStep, setActiveStep}: KnownTypes) => {
   const videoRefs = useRef();
 
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState<boolean>(false);
 
   const onStateChange = useCallback(state => {
     if (state === 'ended') {
@@ -47,13 +47,13 @@ const LessonView = ({currentStep, setActiveStep}: KnownTypes) => {
     }
   };
 
-  if (currentStep == 5) {
-    return (
-      <View style={[styles.container]}>
-        <Text>Lesson Quiz</Text>
-      </View>
-    );
-  }
+  // if (currentStep == 5) {
+  //   return (
+  //     <View style={[styles.container]}>
+  //       <Text>Lesson Quiz</Text>
+  //     </View>
+  //   );
+  // }
   if (currentStep % 2 == 0) {
     return (
       <View style={[styles.container]}>
@@ -251,6 +251,24 @@ const LessonView = ({currentStep, setActiveStep}: KnownTypes) => {
             </Text>
           </View>
         </TouchableOpacity>
+
+        <View
+          style={{
+            width: '100%',
+            alignSelf: 'center',
+            marginVertical: RPW(8),
+          }}>
+          <CustomBtn
+            backgroundColor={COLORS.main}
+            borderRadius={10}
+            borderWidth={1}
+            title="امتحان علي ما سبق"
+            titleColor={COLORS.white}
+            onPress={() => {
+              setActiveStep(5);
+            }}
+          />
+        </View>
       </View>
     );
   }

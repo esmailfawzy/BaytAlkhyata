@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {addTracks, setupPlayer} from '../../utils/trackPlayerServices';
 import TrackPlayer, {
   useProgress,
@@ -25,6 +25,7 @@ import ProgressBar from '../ProgressBar';
 import PlayIcon from '../../assets/icons/TabBarIcons/PlayIcon';
 import PauseBtn from '../../assets/icons/VideoPlayer/PauseBtn';
 import PauseIcon from '../../assets/icons/TabBarIcons/PauseIcon';
+import {useFocusEffect} from '@react-navigation/native';
 
 const iosShadow = {
   shadowOpacity: 0.2,
@@ -67,6 +68,15 @@ const CustomTrackPlayer = () => {
     setWaveform(generateWaveform(barsCount));
     setup();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setPlaying(false);
+        TrackPlayer.pause();
+      };
+    }, []),
+  );
 
   const togglePlayer = async () => {
     if ((await TrackPlayer.getPlaybackState()).state == State.Playing) {

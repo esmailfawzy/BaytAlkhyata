@@ -4,7 +4,7 @@ import TabBarComponent from '../../components/TabBar/TabBarComponent';
 import JourneyStack from '../stacks/JourneyStack';
 import PlayVideoStack from '../stacks/PlayVideoStack';
 import Notifications from '../../screens/User/TabBar/Notifications/Notifications';
-import ContactUs from '../../screens/User/TabBar/ContactUs';
+import ContactUs from '../../screens/User/TabBar/ContactUs/ContactUs';
 
 const Tab = createBottomTabNavigator();
 

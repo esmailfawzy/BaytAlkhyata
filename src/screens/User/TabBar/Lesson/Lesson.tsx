@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {act, useState} from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  Platform,
 } from 'react-native';
 import {RPW} from '../../../../utils/ScreenSize';
 import {COLORS} from '../../../../constants/Colors';
@@ -13,17 +14,19 @@ import LessonArrow from '../../../../assets/icons/Lesson/LessonArrow';
 import LessonQuiz from '../../../../assets/icons/Lesson/LessonQuiz';
 import LessonView from './LessonView';
 import {CustomBtn} from '../../../../components';
+import {useNavigation} from '@react-navigation/native';
 
 const Lesson = () => {
+  const navigation = useNavigation();
   const [activeStep, setActiveStep] = useState(1);
 
   const renderStep = (step: number) => {
     const isActive = activeStep >= step;
 
-    if (step < 5) {
+    if (step !== 5) {
       return (
         <View key={step} style={styles.stepWrapper}>
-          <View
+          {/* <View
             style={[
               styles.line,
               isActive && styles.activeLine,
@@ -31,7 +34,7 @@ const Lesson = () => {
                 backgroundColor: COLORS.main,
               },
             ]}
-          />
+          /> */}
           <TouchableOpacity
             onPress={() => setActiveStep(step)}
             style={styles.circleWrapper}>
@@ -63,7 +66,7 @@ const Lesson = () => {
               <></>
             )}
           </TouchableOpacity>
-          <View
+          {/* <View
             style={[
               styles.line,
               isActive && styles.activeLine,
@@ -71,13 +74,13 @@ const Lesson = () => {
                 backgroundColor: COLORS.main,
               },
             ]}
-          />
+          /> */}
         </View>
       );
     } else if (step == 5) {
       return (
         <View key={step} style={styles.stepWrapper}>
-          <View
+          {/* <View
             style={[
               styles.line,
               isActive && styles.activeLine,
@@ -85,9 +88,12 @@ const Lesson = () => {
                 backgroundColor: COLORS.main,
               },
             ]}
-          />
+          /> */}
           <TouchableOpacity
-            onPress={() => setActiveStep(step)}
+            onPress={() => {
+              navigation.navigate('QuizView');
+              // setActiveStep(step);
+            }}
             style={styles.circleWrapper}>
             <View
               style={[
@@ -119,7 +125,7 @@ const Lesson = () => {
               <></>
             )}
           </TouchableOpacity>
-          <View
+          {/* <View
             style={[
               styles.line,
               isActive && styles.activeLine,
@@ -127,7 +133,7 @@ const Lesson = () => {
                 backgroundColor: COLORS.main,
               },
             ]}
-          />
+          /> */}
         </View>
       );
     }
@@ -153,26 +159,57 @@ const Lesson = () => {
   return (
     <SafeAreaView style={[{flex: 1, backgroundColor: COLORS.white}]}>
       <View style={styles.container}>
-        <View style={styles.stepContainer}>
-          {renderStep(1)}
-          {renderStep(2)}
-          {renderStep(3)}
-          {renderStep(4)}
-          {renderStep(5)}
-        </View>
+        <ScrollView
+          horizontal
+          style={{
+            paddingVertical: Platform.OS == 'ios' ? 17 : 0,
+          }}>
+          <View style={styles.stepContainer}>
+            {renderStep(1)}
+            {renderStep(2)}
+            {renderStep(3)}
+            {renderStep(4)}
+            {renderStep(5)}
+          </View>
+        </ScrollView>
         <ScrollView>
           <LessonView currentStep={activeStep} setActiveStep={setActiveStep} />
         </ScrollView>
         {activeStep < 5 ? (
-          <View style={{width: '95%', marginTop: 20, alignSelf: 'center'}}>
+          <View
+            style={{
+              width: '95%',
+              marginTop: 20,
+              alignSelf: 'center',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
             <CustomBtn
-              backgroundColor={COLORS.white}
-              borderRadius={10}
+              width={'45%'}
+              backgroundColor={COLORS.main}
+              borderRadius={100}
               borderWidth={1}
               title="التالي"
-              titleColor={COLORS.main}
+              titleColor={COLORS.white}
               onPress={() => {
-                if (activeStep < 5) setActiveStep(activeStep + 1);
+                if (activeStep < 4) {
+                  setActiveStep(activeStep + 1);
+                } else if (activeStep == 4) {
+                  console.log(activeStep);
+                  navigation.navigate('QuizView');
+                }
+              }}
+            />
+            <CustomBtn
+              width={'45%'}
+              backgroundColor={'#E2E2E2'}
+              borderRadius={100}
+              title="السابق"
+              titleColor={activeStep == 1 ? '#6D6D6D' : COLORS.black}
+              disabled={activeStep == 1}
+              onPress={() => {
+                if (activeStep > 1) setActiveStep(activeStep - 1);
               }}
             />
           </View>
@@ -196,12 +233,16 @@ const styles = StyleSheet.create({
   stepContainer: {
     flexDirection: 'row-reverse',
     alignItems: 'center',
-    marginBottom: 20,
-    alignSelf: 'center',
+    // alignSelf: 'center',
+    justifyContent: 'space-around',
+    // width: RPW(100),
+    gap: RPW(5),
+    marginVertical: Platform.OS == 'android' ? RPW(5) : 0,
   },
   stepWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   circleWrapper: {
     zIndex: 1,
