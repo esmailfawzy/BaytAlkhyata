@@ -16,6 +16,8 @@ import DrawerBtn from './DrawerBtn';
 import {DrawerIcons} from '../../assets/icons/DrawerIcons';
 import {COLORS} from '../../constants/Colors';
 import HomeIcon from '../../assets/icons/TabBarIcons/HomeIcon';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {JWT_TOKEN} from '../../constants/AppConfig';
 
 const DrawerContent = (props: DrawerContentComponentProps) => {
   const navigation = useNavigation();
@@ -123,7 +125,8 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
           title={'تسجيل الخروج'}
           icon={<DrawerIcons.LogoutIcon />}
           color={COLORS.white}
-          onPress={() => {
+          onPress={async () => {
+            await AsyncStorage.removeItem(JWT_TOKEN);
             props.navigation.navigate('AuthStack');
           }}
         />

@@ -15,9 +15,23 @@ import {useNavigation} from '@react-navigation/native';
 import LogoSvg from '../../assets/imgs/Logo';
 import {FONTS} from '../../constants/Fonts';
 import {AuthInput, CustomBtn} from '../../components';
+import SignupStore from './Stores/SignupStore';
+import {observer} from 'mobx-react';
 
-const Login = (): React.JSX.Element => {
+const Login = () => {
   const navigation = useNavigation();
+
+  const signinPressed = async () => {
+    // navigation.replace('UserDrawer', {
+    //   screen: 'AllModules',
+    // });
+    const result = await SignupStore.doLogin();
+    if (result) {
+      navigation.replace('UserDrawer', {
+        screen: 'AllModules',
+      });
+    }
+  };
   return (
     <SafeAreaView
       style={{
@@ -88,6 +102,8 @@ const Login = (): React.JSX.Element => {
               keyboardType="phone-pad"
               required={false}
               placeholder="رقم الهاتف"
+              value={SignupStore.phoneNumber}
+              onChangeText={value => SignupStore.setPhoneNumber(value)}
             />
             <View style={{marginBottom: RPW(6)}} />
             <AuthInput
@@ -95,6 +111,8 @@ const Login = (): React.JSX.Element => {
               required
               placeholder="كلمة المرور"
               secureText
+              value={SignupStore.password}
+              onChangeText={value => SignupStore.setPassword(value)}
             />
             <View style={{marginBottom: RPW(6)}} />
             <Text
@@ -114,11 +132,7 @@ const Login = (): React.JSX.Element => {
             <CustomBtn
               backgroundColor={COLORS.white}
               title="تسجيل الدخول"
-              onPress={() => {
-                navigation.replace('UserDrawer', {
-                  screen: 'AllModules',
-                });
-              }}
+              onPress={signinPressed}
               titleColor={COLORS.main}
               borderWidth={1}
             />
@@ -149,6 +163,6 @@ const Login = (): React.JSX.Element => {
   );
 };
 
-export default Login;
+export default observer(Login);
 
 const styles = StyleSheet.create({});

@@ -18,14 +18,28 @@ import LogoSvg from '../../assets/imgs/Logo';
 import {CONSTANTS} from '../../constants/Constants';
 import {FONTS} from '../../constants/Fonts';
 import {AuthInput, CustomBtn} from '../../components';
+import {observer} from 'mobx-react';
+import SignupStore from './Stores/SignupStore';
 
 type NavigatoinNames = {
   OnboardingStack: {screen: string} | undefined;
   UserDrawer: {screen: string} | undefined;
+  Login: {screen: string} | undefined;
 };
 
-const Signup = () => {
+const Signup = observer(() => {
   const navigation = useNavigation<NavigationProp<NavigatoinNames>>();
+
+  const signupPressed = async () => {
+    // navigation.replace('UserDrawer', {
+    //   screen: 'AllModules',
+    // });
+    const result = await SignupStore.doSignup();
+    if (result) {
+      navigation.navigate('Login');
+    }
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -106,18 +120,24 @@ const Signup = () => {
               keyboardType="default"
               required
               placeholder="الاسم ثلاثي"
+              value={Signup.name}
+              onChangeText={value => SignupStore.setName(value)}
             />
             <View style={{marginBottom: RPW(6)}} />
             <AuthInput
               keyboardType="email-address"
               required={false}
               placeholder="البريد الالكتروني"
+              value={Signup.name}
+              onChangeText={value => SignupStore.setEmail(value)}
             />
             <View style={{marginBottom: RPW(6)}} />
             <AuthInput
               keyboardType="phone-pad"
               required
               placeholder="رقم الهاتف (واتس اب )"
+              value={SignupStore.phoneNumber}
+              onChangeText={value => SignupStore.setPhoneNumber(value)}
             />
             <View style={{marginBottom: RPW(6)}} />
             <AuthInput
@@ -125,6 +145,8 @@ const Signup = () => {
               required
               placeholder="كلمة المرور"
               secureText
+              value={SignupStore.password}
+              onChangeText={value => SignupStore.setPassword(value)}
             />
             <View style={{marginBottom: RPW(6)}} />
             <AuthInput
@@ -132,16 +154,14 @@ const Signup = () => {
               required
               placeholder="تأكيد كلمة المرور"
               secureText
+              value={SignupStore.re_password}
+              onChangeText={value => SignupStore.setRePassword(value)}
             />
             <View style={{marginBottom: RPW(6)}} />
             <CustomBtn
               backgroundColor={COLORS.main}
               title="انشاء الحساب"
-              onPress={() => {
-                navigation.replace('UserDrawer', {
-                  screen: 'AllModules',
-                });
-              }}
+              onPress={signupPressed}
               titleColor={COLORS.white}
             />
           </View>
@@ -149,7 +169,7 @@ const Signup = () => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 export default Signup;
 

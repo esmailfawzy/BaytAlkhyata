@@ -27,6 +27,8 @@ interface KnownProps {
   keyboardType?: 'default' | 'number-pad' | 'email-address' | 'phone-pad';
   secureText?: boolean;
   borderRadius?: number;
+  onChangeText: (text: string) => void;
+  value: string;
 }
 
 const AuthInput = (props: KnownProps): React.JSX.Element => {
@@ -49,8 +51,10 @@ const AuthInput = (props: KnownProps): React.JSX.Element => {
         Platform.OS == 'ios' ? {...iosShadow} : {elevation: 4},
       ]}>
       <TextInput
+        onChangeText={props.onChangeText}
         placeholder={props.placeholder}
         placeholderTextColor={COLORS.inputColor}
+        value={props.value}
         style={{
           textAlign: 'right',
           color: COLORS.black,
