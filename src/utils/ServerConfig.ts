@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { BASE_URL } from '../constants/AppConfig';
 
 // Set config defaults when creating the instance
 export const server = axios.create({
-  baseURL: 'http://localhost:3000/api/v1',
+  baseURL: BASE_URL,
   timeout: 6000,
   headers: {
     Accept: 'application/json',

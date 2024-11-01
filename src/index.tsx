@@ -8,6 +8,7 @@ import './sheets';
 import {observer} from 'mobx-react';
 import GlobalStore from './utils/GlobalStore';
 import SplashScreen from './screens/SplashScreen';
+import PDFViewer from './screens/User/Drawer/Library/PDFViewer';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,13 @@ const Main = observer((): React.JSX.Element => {
       <Stack.Screen name="OnboardingStack" component={OnboardingStack} />
       <Stack.Screen name="AuthStack" component={AuthStack} />
       <Stack.Screen name="UserDrawer" component={UserDrawer} />
+      <Stack.Screen
+        name="PDFViewer"
+        component={PDFViewer}
+        options={{
+          headerShown: true,
+        }}
+      />
     </Stack.Navigator>
   );
 });

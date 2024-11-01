@@ -1,5 +1,8 @@
 import {
+  ActivityIndicator,
+  Image,
   Platform,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -7,9 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {COLORS} from '../../../../constants/Colors';
-import {RPW} from '../../../../utils/ScreenSize';
+import {RPH, RPW} from '../../../../utils/ScreenSize';
 import StarIcon from '../../../../assets/icons/StarIcon';
 import {FONTS} from '../../../../constants/Fonts';
 import {CustomBtn} from '../../../../components';
@@ -18,6 +21,9 @@ import FirstItem from '../../../../assets/imgs/GiftImgs/FirstItem';
 import {CONSTANTS} from '../../../../constants/Constants';
 import PDFIcon from '../../../../assets/icons/PDFIcon';
 import DownIcon from '../../../../assets/icons/DownIcon';
+import LibraryStore, {BookType} from './LibraryStore';
+import {observer} from 'mobx-react';
+import {BASE_URL} from '../../../../constants/AppConfig';
 
 const iosShadow = {
   shadowOpacity: 0.2,
@@ -28,7 +34,12 @@ const iosShadow = {
   },
 };
 
-const ItemCard = () => {
+interface NavTypes {
+  PDFViewer: {url: string; title: string};
+}
+
+const ItemCard = observer(({item}: {item: BookType}) => {
+  const navigation = useNavigation<NavigationProp<NavTypes>>();
   return (
     <View
       style={{
@@ -48,7 +59,31 @@ const ItemCard = () => {
           },
           Platform.OS == 'ios' ? {...iosShadow} : {elevation: 4},
         ]}>
-        <PDFIcon />
+        <Pressable
+          onPress={async () => {
+            await LibraryStore.getPDF(item).then(url => {
+              console.log('pdf link', url);
+              navigation.navigate('PDFViewer', {
+                url,
+                title: item.title,
+                // url: `${BASE_URL}/student/library/${item._id}`,
+              });
+            });
+          }}>
+          {item.image ? (
+            <Image
+              source={{uri: item.image}}
+              resizeMode="contain"
+              style={{
+                width: RPW(18),
+                height: RPH(10),
+                alignSelf: 'center',
+              }}
+            />
+          ) : (
+            <PDFIcon />
+          )}
+        </Pressable>
         <Text
           style={{
             color: COLORS.main,
@@ -56,7 +91,7 @@ const ItemCard = () => {
             fontSize: 16,
             fontWeight: '600',
           }}>
-          كتاب الخياطة
+          {item.title}
         </Text>
         <Text
           style={{
@@ -65,38 +100,64 @@ const ItemCard = () => {
             fontSize: 12,
             fontWeight: '600',
           }}>
-          12 mb
+          {item.size}
         </Text>
-        <TouchableOpacity
-          activeOpacity={CONSTANTS.activeOpacity}
-          style={{
-            width: '100%',
-            backgroundColor: COLORS.main,
-            padding: RPW(2),
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            borderBottomStartRadius: 10,
-            borderBottomEndRadius: 10,
-            gap: 6,
-          }}>
-          <DownIcon />
-          <Text
+        {LibraryStore.isDownloading ? (
+          <View
             style={{
-              fontFamily: FONTS.Manuale,
-              fontSize: 16,
-              fontWeight: '600',
-              color: COLORS.white,
+              width: '100%',
+              backgroundColor: COLORS.main,
+              padding: RPW(2),
+              // flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderBottomStartRadius: 10,
+              borderBottomEndRadius: 10,
+              gap: 6,
             }}>
-            تبديل النقاط
-          </Text>
-        </TouchableOpacity>
+            <ActivityIndicator size={'small'} color={'white'} />
+          </View>
+        ) : (
+          <TouchableOpacity
+            onPress={() => {
+              LibraryStore.downloadBook(item);
+            }}
+            disabled={LibraryStore.isDownloading}
+            activeOpacity={CONSTANTS.activeOpacity}
+            style={{
+              width: '100%',
+              backgroundColor: COLORS.main,
+              padding: RPW(2),
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              borderBottomStartRadius: 10,
+              borderBottomEndRadius: 10,
+              gap: 6,
+            }}>
+            <DownIcon />
+
+            <Text
+              style={{
+                fontFamily: FONTS.Manuale,
+                fontSize: 16,
+                fontWeight: '600',
+                color: COLORS.white,
+              }}>
+              تحميل
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
-};
+});
 
-const Library = () => {
+const Library = observer((): React.JSX.Element => {
+  useEffect(() => {
+    console.log('hi');
+    LibraryStore.getAllBooks();
+  }, []);
   return (
     <SafeAreaView
       style={{
@@ -129,23 +190,15 @@ const Library = () => {
               flexWrap: 'wrap',
               gap: RPW(8),
             }}>
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
+            {LibraryStore.books.map((item, index) => (
+              <ItemCard item={item} key={index} />
+            ))}
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 export default Library;
 
