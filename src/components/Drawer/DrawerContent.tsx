@@ -18,8 +18,10 @@ import {COLORS} from '../../constants/Colors';
 import HomeIcon from '../../assets/icons/TabBarIcons/HomeIcon';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {JWT_TOKEN} from '../../constants/AppConfig';
+import {observer} from 'mobx-react';
+import AuthStore from '../../screens/Auth/Stores/AuthStore';
 
-const DrawerContent = (props: DrawerContentComponentProps) => {
+const DrawerContent = observer((props: DrawerContentComponentProps) => {
   const navigation = useNavigation();
 
   // Get the current route name
@@ -125,15 +127,15 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
           title={'تسجيل الخروج'}
           icon={<DrawerIcons.LogoutIcon />}
           color={COLORS.white}
-          onPress={async () => {
-            await AsyncStorage.removeItem(JWT_TOKEN);
-            props.navigation.navigate('AuthStack');
+          onPress={() => {
+            AuthStore.doLogout(navigation);
+            // props.navigation.navigate('AuthStack');
           }}
         />
       </View>
     </SafeAreaView>
   );
-};
+});
 
 export default DrawerContent;
 

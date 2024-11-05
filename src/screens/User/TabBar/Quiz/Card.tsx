@@ -8,6 +8,10 @@ import {CONSTANTS} from '../../../../constants/Constants';
 import {COLORS} from '../../../../constants/Colors';
 import {DymmyImgs} from '../../../../assets/imgs/AllModules';
 import Beginners from '../../../../assets/imgs/QuizBank/Beginners';
+import MediumQuiz from '../../../../assets/imgs/QuizBank/MediumQuiz';
+import HardQuiz from '../../../../assets/imgs/QuizBank/HardQuiz';
+import {observer} from 'mobx-react';
+import QuizViewStore from './Stores/QuizViewStore';
 
 interface KnownTypes {
   item: any;
@@ -24,10 +28,11 @@ const iosShadow = {
 };
 
 type RootStackParamList = {
-  QuizView: {screen: string} | undefined;
+  QuizView: {difficulty: string} | undefined;
 };
-const Card = ({item, id}: KnownTypes) => {
+const Card = observer(({item, id}: KnownTypes) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   return (
     <View
       key={item._id}
@@ -78,6 +83,7 @@ const Card = ({item, id}: KnownTypes) => {
         <TouchableOpacity
           activeOpacity={CONSTANTS.activeOpacity}
           onPress={() => {
+            QuizViewStore.setDifficulty(item.difficulty);
             navigation.navigate('QuizView');
           }}
           style={{
@@ -102,11 +108,12 @@ const Card = ({item, id}: KnownTypes) => {
           </Text>
         </TouchableOpacity>
       </View>
-
-      <Beginners />
+      {item.title == 'أسئلة للمبتدئين' && <Beginners />}
+      {item.title == 'أسئلة متوسطة' && <MediumQuiz />}
+      {item.title == 'أسئلة للمحترفين' && <HardQuiz />}
     </View>
   );
-};
+});
 
 export default Card;
 

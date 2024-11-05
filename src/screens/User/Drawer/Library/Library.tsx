@@ -62,7 +62,6 @@ const ItemCard = observer(({item}: {item: BookType}) => {
         <Pressable
           onPress={async () => {
             await LibraryStore.getPDF(item).then(url => {
-              console.log('pdf link', url);
               navigation.navigate('PDFViewer', {
                 url,
                 title: item.title,
@@ -155,7 +154,6 @@ const ItemCard = observer(({item}: {item: BookType}) => {
 
 const Library = observer((): React.JSX.Element => {
   useEffect(() => {
-    console.log('hi');
     LibraryStore.getAllBooks();
   }, []);
   return (

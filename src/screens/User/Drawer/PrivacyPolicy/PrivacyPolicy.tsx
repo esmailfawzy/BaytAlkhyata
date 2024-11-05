@@ -6,10 +6,15 @@ import {
   Text,
   View,
 } from 'react-native';
-import React from 'react';
-import {RPW} from '../../../utils/ScreenSize';
-import {FONTS} from '../../../constants/Fonts';
-import {COLORS} from '../../../constants/Colors';
+import React, {useEffect, useState} from 'react';
+import {RPW} from '../../../../utils/ScreenSize';
+import {FONTS} from '../../../../constants/Fonts';
+import {COLORS} from '../../../../constants/Colors';
+import {server} from '../../../../utils/ServerConfig';
+import GlobalStore from '../../../../utils/GlobalStore';
+import {observer} from 'mobx-react';
+import AuthStore from '../../../Auth/Stores/AuthStore';
+import {useNavigation} from '@react-navigation/native';
 
 const iosShadow = {
   shadowOpacity: 0.2,
@@ -20,7 +25,7 @@ const iosShadow = {
   },
 };
 
-const ItemCard = () => {
+const ItemCard = ({item}: {item: PrivacyField}) => {
   return (
     <View
       style={{
@@ -36,7 +41,7 @@ const ItemCard = () => {
           fontFamily: FONTS.Manuale,
           fontWeight: '400',
         }}>
-        الحقل الأول
+        {item.title}
       </Text>
 
       <View
@@ -46,6 +51,7 @@ const ItemCard = () => {
           borderBottomWidth: 3,
           borderBottomColor: '#FAB65E',
           borderRadius: 10,
+          width: '100%',
         }}>
         <Text
           style={{
@@ -54,20 +60,43 @@ const ItemCard = () => {
             color: COLORS.black,
             textAlign: 'left',
           }}>
-          لوريم إيبسوم(Lorem Ipsum) هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل
-          وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم
-          ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة
-          مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب
-          بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم تقضي على
-          هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة والتنضيد
-          الإلكتروني.
+          {item.content}
         </Text>
       </View>
     </View>
   );
 };
 
-const PrivacyPolicy = () => {
+interface PrivacyField {
+  _id: string;
+  title: string;
+  content: string;
+}
+
+const PrivacyPolicy = observer(() => {
+  const navigation = useNavigation();
+  const [privacyItems, setPrivacyItems] = useState<Array<PrivacyField>>([]);
+
+  useEffect(() => {
+    getPrivacyPolicy();
+  }, []);
+
+  const getPrivacyPolicy = async () => {
+    try {
+      const res = await server.get('/student/policy', {
+        headers: {Authorization: 'Bearer ' + GlobalStore.jwtToken},
+      });
+      if (res.status == 200) {
+        setPrivacyItems(res.data.result);
+      }
+    } catch (error) {
+      console.error('error getting privacy policy,', error);
+      if (error == 'Authentication Fail') {
+        AuthStore.doLogout(navigation);
+      }
+    }
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -97,23 +126,15 @@ const PrivacyPolicy = () => {
               justifyContent: 'center',
               gap: RPW(6),
             }}>
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
-            <ItemCard />
+            {privacyItems.map((item, index) => (
+              <ItemCard item={item} key={item._id} />
+            ))}
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 export default PrivacyPolicy;
 

@@ -36,6 +36,7 @@ class LibraryStore {
   setIsDownloading(value: boolean) {
     this.isDownloading = value;
   }
+  
   async getAllBooks() {
     try {
       const res = await server.get('/student/library', {
@@ -43,8 +44,6 @@ class LibraryStore {
           Authorization: 'Bearer ' + GlobalStore.jwtToken,
         },
       });
-
-      console.log('res', res.data);
       if (res.status == 200) {
         this.setBooks(res.data.result);
       }
@@ -60,8 +59,6 @@ class LibraryStore {
           Authorization: 'Bearer ' + GlobalStore.jwtToken,
         },
       });
-
-      console.log('res', res.data);
       if (res.status == 200) {
         // this.setBooks(res.data.result);
         return res.data.pdfUrl;
@@ -115,11 +112,10 @@ class LibraryStore {
       const result = await downloadObj.promise;
 
       if (result.statusCode === 200) {
-        console.log('File downloaded successfully:', downloadDest);
-        Alert.alert('File downloaded successfully!');
+        console.log('PDF downloaded successfully:', downloadDest);
+        Alert.alert('PDF downloaded successfully!');
       } else {
-        console.log('Failed to download file');
-        Alert.alert('Failed to download file');
+        Alert.alert('Failed to download PDF');
       }
 
       // Alert.alert(

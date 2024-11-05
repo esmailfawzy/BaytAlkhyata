@@ -12,7 +12,7 @@ class GlobalStore {
     });
   }
 
-  async setJWTToken(value: string | null) {
+  setJWTToken(value: string | null) {
     this.jwtToken = value;
   }
 }

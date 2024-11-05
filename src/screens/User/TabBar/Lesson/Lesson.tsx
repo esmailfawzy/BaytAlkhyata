@@ -14,19 +14,138 @@ import LessonArrow from '../../../../assets/icons/Lesson/LessonArrow';
 import LessonQuiz from '../../../../assets/icons/Lesson/LessonQuiz';
 import LessonView from './LessonView';
 import {CustomBtn} from '../../../../components';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {observer} from 'mobx-react';
+import ChapterStore, {ChapterType} from '../JourneyHome/Stores/ChapterStore';
 
-const Lesson = () => {
-  const navigation = useNavigation();
+type Navigators = {
+  QuizView: undefined;
+};
+
+const Lesson = observer(() => {
+  const navigation = useNavigation<NavigationProp<Navigators>>();
   const [activeStep, setActiveStep] = useState(1);
 
-  const renderStep = (step: number) => {
+  const renderStep = (item: ChapterType, step: number) => {
     const isActive = activeStep >= step;
 
-    if (step !== 5) {
-      return (
-        <View key={step} style={styles.stepWrapper}>
-          {/* <View
+    // if (step !== 5) {
+    //   return (
+    //     <View key={step} style={styles.stepWrapper}>
+    //       {/* <View
+    //         style={[
+    //           styles.line,
+    //           isActive && styles.activeLine,
+    //           activeStep == step && {
+    //             backgroundColor: COLORS.main,
+    //           },
+    //         ]}
+    //       /> */}
+    //       <TouchableOpacity
+    //         onPress={() => setActiveStep(step)}
+    //         style={styles.circleWrapper}>
+    //         <View
+    //           style={[
+    //             styles.circle,
+    //             isActive && styles.activeCircle,
+    //             activeStep == step && {
+    //               width: RPW(10),
+    //               height: RPW(10),
+    //               backgroundColor: COLORS.main,
+    //               borderRadius: RPW(10),
+    //             },
+    //           ]}>
+    //           <Text style={[styles.label, isActive && styles.activeLabel]}>
+    //             {step}
+    //           </Text>
+    //         </View>
+    //         {activeStep == step ? (
+    //           <View
+    //             style={{
+    //               position: 'absolute',
+    //               bottom: -RPW(3),
+    //               alignSelf: 'center',
+    //             }}>
+    //             <LessonArrow />
+    //           </View>
+    //         ) : (
+    //           <></>
+    //         )}
+    //       </TouchableOpacity>
+    //       {/* <View
+    //         style={[
+    //           styles.line,
+    //           isActive && styles.activeLine,
+    //           activeStep == step && {
+    //             backgroundColor: COLORS.main,
+    //           },
+    //         ]}
+    //       /> */}
+    //     </View>
+    //   );
+    // } else if (step == 5) {
+    //   return (
+    //     <View key={step} style={styles.stepWrapper}>
+    //       {/* <View
+    //         style={[
+    //           styles.line,
+    //           isActive && styles.activeLine,
+    //           activeStep == step && {
+    //             backgroundColor: COLORS.main,
+    //           },
+    //         ]}
+    //       /> */}
+    //       <TouchableOpacity
+    //         onPress={() => {
+    //           navigation.navigate('QuizView');
+    //           // setActiveStep(step);
+    //         }}
+    //         style={styles.circleWrapper}>
+    //         <View
+    //           style={[
+    //             styles.circle,
+    //             isActive && styles.activeCircle,
+    //             activeStep == step && {
+    //               width: RPW(10),
+    //               height: RPW(10),
+    //               borderRadius: RPW(10),
+    //             },
+    //             {
+    //               borderWidth: 1,
+    //               borderColor: '#FF7800',
+    //               backgroundColor: 'transparent',
+    //             },
+    //           ]}>
+    //           <LessonQuiz />
+    //         </View>
+    //         {activeStep == step ? (
+    //           <View
+    //             style={{
+    //               position: 'absolute',
+    //               bottom: -RPW(4),
+    //               alignSelf: 'center',
+    //             }}>
+    //             <LessonArrow />
+    //           </View>
+    //         ) : (
+    //           <></>
+    //         )}
+    //       </TouchableOpacity>
+    //       {/* <View
+    //         style={[
+    //           styles.line,
+    //           isActive && styles.activeLine,
+    //           activeStep == step && {
+    //             backgroundColor: COLORS.main,
+    //           },
+    //         ]}
+    //       /> */}
+    //     </View>
+    //   );
+    // }
+    return (
+      <View key={step} style={styles.stepWrapper}>
+        {/* <View
             style={[
               styles.line,
               isActive && styles.activeLine,
@@ -35,38 +154,41 @@ const Lesson = () => {
               },
             ]}
           /> */}
-          <TouchableOpacity
-            onPress={() => setActiveStep(step)}
-            style={styles.circleWrapper}>
+        <TouchableOpacity
+          onPress={() => {
+            console.log(item);
+            setActiveStep(step);
+          }}
+          style={styles.circleWrapper}>
+          <View
+            style={[
+              styles.circle,
+              isActive && styles.activeCircle,
+              activeStep == step && {
+                width: RPW(10),
+                height: RPW(10),
+                backgroundColor: COLORS.main,
+                borderRadius: RPW(10),
+              },
+            ]}>
+            <Text style={[styles.label, isActive && styles.activeLabel]}>
+              {step}
+            </Text>
+          </View>
+          {activeStep == step ? (
             <View
-              style={[
-                styles.circle,
-                isActive && styles.activeCircle,
-                activeStep == step && {
-                  width: RPW(10),
-                  height: RPW(10),
-                  backgroundColor: COLORS.main,
-                  borderRadius: RPW(10),
-                },
-              ]}>
-              <Text style={[styles.label, isActive && styles.activeLabel]}>
-                {step}
-              </Text>
+              style={{
+                position: 'absolute',
+                bottom: -RPW(3),
+                alignSelf: 'center',
+              }}>
+              <LessonArrow />
             </View>
-            {activeStep == step ? (
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: -RPW(3),
-                  alignSelf: 'center',
-                }}>
-                <LessonArrow />
-              </View>
-            ) : (
-              <></>
-            )}
-          </TouchableOpacity>
-          {/* <View
+          ) : (
+            <></>
+          )}
+        </TouchableOpacity>
+        {/* <View
             style={[
               styles.line,
               isActive && styles.activeLine,
@@ -75,68 +197,8 @@ const Lesson = () => {
               },
             ]}
           /> */}
-        </View>
-      );
-    } else if (step == 5) {
-      return (
-        <View key={step} style={styles.stepWrapper}>
-          {/* <View
-            style={[
-              styles.line,
-              isActive && styles.activeLine,
-              activeStep == step && {
-                backgroundColor: COLORS.main,
-              },
-            ]}
-          /> */}
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('QuizView');
-              // setActiveStep(step);
-            }}
-            style={styles.circleWrapper}>
-            <View
-              style={[
-                styles.circle,
-                isActive && styles.activeCircle,
-                activeStep == step && {
-                  width: RPW(10),
-                  height: RPW(10),
-                  borderRadius: RPW(10),
-                },
-                {
-                  borderWidth: 1,
-                  borderColor: '#FF7800',
-                  backgroundColor: 'transparent',
-                },
-              ]}>
-              <LessonQuiz />
-            </View>
-            {activeStep == step ? (
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: -RPW(4),
-                  alignSelf: 'center',
-                }}>
-                <LessonArrow />
-              </View>
-            ) : (
-              <></>
-            )}
-          </TouchableOpacity>
-          {/* <View
-            style={[
-              styles.line,
-              isActive && styles.activeLine,
-              activeStep == step && {
-                backgroundColor: COLORS.main,
-              },
-            ]}
-          /> */}
-        </View>
-      );
-    }
+      </View>
+    );
   };
 
   // const renderContent = () => {
@@ -165,11 +227,9 @@ const Lesson = () => {
             paddingVertical: Platform.OS == 'ios' ? 17 : 0,
           }}>
           <View style={styles.stepContainer}>
-            {renderStep(1)}
-            {renderStep(2)}
-            {renderStep(3)}
-            {renderStep(4)}
-            {renderStep(5)}
+            {ChapterStore.chapters.map((chapter, index) =>
+              renderStep(chapter, index + 1),
+            )}
           </View>
         </ScrollView>
         <ScrollView>
@@ -196,7 +256,6 @@ const Lesson = () => {
                 if (activeStep < 4) {
                   setActiveStep(activeStep + 1);
                 } else if (activeStep == 4) {
-                  console.log(activeStep);
                   navigation.navigate('QuizView');
                 }
               }}
@@ -219,7 +278,7 @@ const Lesson = () => {
       </View>
     </SafeAreaView>
   );
-};
+});
 
 export default Lesson;
 
@@ -256,9 +315,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAB65E7D',
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#FF7800',
   },
   activeCircle: {
     backgroundColor: '#298D45',
+    borderWidth: 0,
   },
   label: {
     color: COLORS.black,

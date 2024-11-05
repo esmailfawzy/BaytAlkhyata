@@ -5,6 +5,8 @@ import {COLORS} from '../../../../constants/Colors';
 import ProgressBar from '../../../../components/ProgressBar';
 import {FONTS} from '../../../../constants/Fonts';
 import StarIcon from '../../../../assets/icons/StarIcon';
+import {observer} from 'mobx-react';
+import ProfileStore from '../../Drawer/Profile/ProfileStore';
 
 const iosShadow = {
   shadowOpacity: 0.15,
@@ -15,7 +17,7 @@ const iosShadow = {
   },
 };
 
-const CourseOverviewCard = () => {
+const CourseOverviewCard = observer(() => {
   return (
     <View
       style={[
@@ -50,7 +52,9 @@ const CourseOverviewCard = () => {
           <StarIcon />
           <Text style={styles.title}>عدد النقاط</Text>
         </View>
-        <Text style={[styles.subTitle, {color: COLORS.main}]}>524</Text>
+        <Text style={[styles.subTitle, {color: COLORS.main}]}>
+          {ProfileStore.points}
+        </Text>
       </View>
       <View
         style={{
@@ -76,7 +80,7 @@ const CourseOverviewCard = () => {
       </View>
     </View>
   );
-};
+});
 
 export default CourseOverviewCard;
 

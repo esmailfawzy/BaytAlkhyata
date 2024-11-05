@@ -1,4 +1,5 @@
 import {
+  Image,
   Platform,
   SafeAreaView,
   ScrollView,
@@ -7,15 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {COLORS} from '../../../../constants/Colors';
-import {RPW} from '../../../../utils/ScreenSize';
+import {RPH, RPW} from '../../../../utils/ScreenSize';
 import StarIcon from '../../../../assets/icons/StarIcon';
 import {FONTS} from '../../../../constants/Fonts';
 import {CustomBtn} from '../../../../components';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import FirstItem from '../../../../assets/imgs/GiftImgs/FirstItem';
 import {CONSTANTS} from '../../../../constants/Constants';
+import {observer} from 'mobx-react';
+import GiftstoreStore, {ProductType} from './GiftstoreStore';
+import ProfileStore from '../Profile/ProfileStore';
 
 type NavigationName = {
   JourneyStack: {screen: string} | undefined;
@@ -30,7 +34,7 @@ const iosShadow = {
   },
 };
 
-const ItemCard = () => {
+const ItemCard = observer(({item}: {item: ProductType}) => {
   return (
     <View
       style={{
@@ -50,12 +54,28 @@ const ItemCard = () => {
           },
           Platform.OS == 'ios' ? {...iosShadow} : {elevation: 4},
         ]}>
-        <FirstItem />
+        {item.image ? (
+          <Image
+            source={{uri: item.image}}
+            style={{
+              width: RPW(18),
+              height: RPH(10),
+              alignSelf: 'center',
+            }}
+          />
+        ) : (
+          <FirstItem />
+        )}
         <TouchableOpacity
           activeOpacity={CONSTANTS.activeOpacity}
+          onPress={() => {
+            GiftstoreStore.redeemProduct(item._id);
+          }}
+          disabled={item.points > ProfileStore.points}
           style={{
             width: '100%',
-            backgroundColor: COLORS.main,
+            backgroundColor:
+              item.points > ProfileStore.points ? '#777777' : COLORS.main,
             padding: RPW(3),
             alignItems: 'center',
             justifyContent: 'center',
@@ -80,14 +100,17 @@ const ItemCard = () => {
           fontSize: 16,
           fontWeight: '600',
         }}>
-        450 نقطة
+        {item.points} نقطة
       </Text>
     </View>
   );
-};
+});
 
-const GiftStore = () => {
+const GiftStore = observer(() => {
   const navigation = useNavigation<NavigationProp<NavigationName>>();
+  useEffect(() => {
+    GiftstoreStore.getAllProducts();
+  }, []);
   return (
     <SafeAreaView
       style={{
@@ -135,7 +158,7 @@ const GiftStore = () => {
                 fontFamily: FONTS.Manuale,
                 fontSize: 14,
               }}>
-              524
+              {ProfileStore.points}
             </Text>
           </View>
 
@@ -186,24 +209,16 @@ const GiftStore = () => {
                 flexWrap: 'wrap',
                 gap: RPW(8),
               }}>
-              <ItemCard />
-              <ItemCard />
-              <ItemCard />
-              <ItemCard />
-              <ItemCard />
-              <ItemCard />
-              <ItemCard />
-              <ItemCard />
-              <ItemCard />
-              <ItemCard />
-              <ItemCard />
+              {GiftstoreStore.products.map((item, index) => (
+                <ItemCard item={item} key={index} />
+              ))}
             </View>
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 export default GiftStore;
 

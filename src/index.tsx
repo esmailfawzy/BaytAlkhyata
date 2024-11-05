@@ -1,12 +1,11 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import OnboardingStack from './navigation/stacks/OnboardingStack';
 import AuthStack from './navigation/stacks/AuthStack';
 import UserDrawer from './navigation/drawer/UserDrawer';
 import './sheets';
 import {observer} from 'mobx-react';
-import GlobalStore from './utils/GlobalStore';
 import SplashScreen from './screens/SplashScreen';
 import PDFViewer from './screens/User/Drawer/Library/PDFViewer';
 

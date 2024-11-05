@@ -4,8 +4,9 @@ import {COLORS} from '../../../../constants/Colors';
 import {RPW} from '../../../../utils/ScreenSize';
 import Card from './Card';
 import DummyData from '../../../../dummy_data/QuizBank.json';
+import {observer} from 'mobx-react';
 
-const QuizBank = () => {
+const QuizBank = observer(() => {
   return (
     <SafeAreaView
       style={{
@@ -26,7 +27,7 @@ const QuizBank = () => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 export default QuizBank;
 

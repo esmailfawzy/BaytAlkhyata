@@ -1,35 +1,26 @@
 [
   {
     "_id": "66abaf418981bac8fab05dc0",
-    "index": 0,
-    "guid": "299da82a-eded-4608-9319-805bedff7f83",
-    "isActive": false,
-    "balance": "$3,731.11",
     "color": "#FFE3BF4D",
     "borderColor": "#FAB65E",
     "title": "أسئلة للمبتدئين",
+    "difficulty": "easy",
     "description": "رحلة تعلم الخياطة هي مغامرة مليئة بالإبداع والتحدي، حيث تتحول الأفكار إلى أزياء. "
   },
   {
     "_id": "66abaf418cf70008a1d8beed",
-    "index": 1,
-    "guid": "39442c01-c9ad-4424-9fff-065e0722434c",
-    "isActive": false,
-    "balance": "$2,656.40",
-    "color": "#CB2DC41A",
-    "borderColor": "#CB2DC4",
+    "color": "#5EA6FA1A",
+    "borderColor": "#5EA6FA",
     "title": "أسئلة متوسطة",
+    "difficulty": "medium",
     "description": "رحلة تعلم الخياطة هي مغامرة مليئة بالإبداع والتحدي، حيث تتحول الأفكار إلى أزياء. "
   },
   {
     "_id": "66abaf4119fceb0b2d8f9e78",
-    "index": 2,
-    "guid": "3d64e206-46ca-4c3e-a82d-2600f5b0f606",
-    "isActive": false,
-    "balance": "$1,367.08",
     "color": "#C9472B1A",
     "borderColor": "#C9472B",
     "title": "أسئلة للمحترفين",
+    "difficulty": "hard",
     "description": "رحلة تعلم الخياطة هي مغامرة مليئة بالإبداع والتحدي، حيث تتحول الأفكار إلى أزياء. "
   }
 ]

@@ -5,12 +5,13 @@ import BankQuizIcon from '../../../../assets/icons/BankQuizIcon';
 import {FONTS} from '../../../../constants/Fonts';
 import LessonArrow from '../../../../assets/icons/Lesson/LessonArrow';
 import ChevronRight from '../../../../assets/icons/ChevronRight';
+import {observer} from 'mobx-react';
 
 type KnownTypes = {
   onPress: () => void;
 };
 
-const QuizBankCard = ({onPress}: KnownTypes) => {
+const QuizBankCard = observer(({onPress}: KnownTypes) => {
   return (
     <Pressable onPress={onPress} style={styles.container}>
       <ChevronRight />
@@ -26,7 +27,7 @@ const QuizBankCard = ({onPress}: KnownTypes) => {
       <BankQuizIcon />
     </Pressable>
   );
-};
+});
 
 export default QuizBankCard;
 

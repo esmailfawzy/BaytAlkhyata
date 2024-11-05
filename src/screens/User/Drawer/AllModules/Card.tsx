@@ -46,6 +46,7 @@ const Card = ({item, id}: KnownTypes) => {
           justifyContent: 'space-between',
         },
         Platform.OS == 'ios' ? {...iosShadow} : {elevation: 0},
+        item.title !== 'رحلة التعليم' && {opacity: 0.6},
       ]}>
       <View
         style={{
@@ -75,6 +76,7 @@ const Card = ({item, id}: KnownTypes) => {
         </Text>
 
         <TouchableOpacity
+          disabled={item.title !== 'رحلة التعليم'}
           activeOpacity={CONSTANTS.activeOpacity}
           onPress={() => {
             navigation.navigate('JourneyTabBar', {
@@ -103,8 +105,9 @@ const Card = ({item, id}: KnownTypes) => {
           </Text>
         </TouchableOpacity>
       </View>
-
-      <DymmyImgs.RehletElta3lom />
+      {item.title == 'رحلة التعليم' && <DymmyImgs.RehletElta3lom />}
+      {item.title == 'مشروعي' && <DymmyImgs.Mashro3y />}
+      {item.title == 'نظام السفيرات' && <DymmyImgs.Nezam />}
     </View>
   );
 };

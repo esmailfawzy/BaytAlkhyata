@@ -8,37 +8,47 @@ import {
 } from 'react-native';
 import {COLORS} from '../constants/Colors';
 import {RPH, RPW} from '../utils/ScreenSize';
+import {observer} from 'mobx-react';
 
 interface ProgressBarProps {
   progress: number; // Progress is a percentage value (0 to 100)
+  color?: string;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({progress}) => {
-  const [width, setWidth] = useState<number>(0);
-  const animatedWidth = new Animated.Value(0);
+const ProgressBar: React.FC<ProgressBarProps> = observer(
+  ({progress, color = COLORS.main}) => {
+    const [width, setWidth] = useState<number>(0);
+    const animatedWidth = new Animated.Value(0);
 
-  useEffect(() => {
-    Animated.timing(animatedWidth, {
-      toValue: (progress / 100) * width,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-  }, [progress, width]);
+    useEffect(() => {
+      Animated.timing(animatedWidth, {
+        toValue: (progress / 100) * width,
+        duration: 500,
+        useNativeDriver: false,
+      }).start();
+    }, [progress, width]);
 
-  const handleLayout = (e: LayoutChangeEvent) => {
-    setWidth(e.nativeEvent.layout.width);
-  };
+    const handleLayout = (e: LayoutChangeEvent) => {
+      setWidth(e.nativeEvent.layout.width);
+    };
 
-  return (
-    <View style={styles.container} onLayout={handleLayout}>
-      <Animated.View style={[styles.progress, {width: animatedWidth}]}>
-        <View style={[styles.gradient]}>
-          <Text style={styles.progressText}>{`${progress}%`}</Text>
-        </View>
-      </Animated.View>
-    </View>
-  );
-};
+    return (
+      <View style={styles.container} onLayout={handleLayout}>
+        <Animated.View style={[styles.progress, {width: animatedWidth}]}>
+          <View
+            style={[
+              styles.gradient,
+              {
+                backgroundColor: color,
+              },
+            ]}>
+            <Text style={styles.progressText}>{`${progress}%`}</Text>
+          </View>
+        </Animated.View>
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -57,7 +67,6 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.main,
   },
   progressText: {
     color: 'white',

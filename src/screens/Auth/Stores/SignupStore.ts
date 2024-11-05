@@ -60,7 +60,6 @@ class SignupStore {
           },
           {headers: {'Content-Type': 'application/json'}},
         );
-        console.log(res.status);
         if (res.status == 201) {
           return true;
         } else if (res.status == 400) {
@@ -88,9 +87,8 @@ class SignupStore {
         },
         {headers: {'Content-Type': 'application/json'}},
       );
-      console.log(res.status);
       if (res.status == 200 && res.data?.result?.token) {
-        console.log(res.data?.result?.token);
+        console.log('res.data?.result?.token ', res.data?.result?.token);
         GlobalStore.setJWTToken(res.data?.result?.token);
         await AsyncStorage.setItem(JWT_TOKEN, res.data?.result?.token);
 

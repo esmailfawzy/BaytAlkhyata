@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {RPW} from '../../../../utils/ScreenSize';
 import {COLORS} from '../../../../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
@@ -16,10 +16,16 @@ import CourseOverviewCard from './CourseOverviewCard';
 import PhasesData from '../../../../dummy_data/PhasesData.json';
 import PhaseCard from './PhaseCard';
 import PhaseCardSvg from '../../../../assets/icons/PhaseCardSvg';
+import ChapterStore from './Stores/ChapterStore';
+import {observer} from 'mobx-react';
+import DiplomasStore from '../../Drawer/Journeys/Stores/DiplomasStore';
 
-const JourneyHome = () => {
+const JourneyHome = observer(() => {
   const navigation = useNavigation();
 
+  useEffect(() => {
+    ChapterStore.getChapters();
+  }, []);
   return (
     <SafeAreaView
       style={{
@@ -53,8 +59,10 @@ const JourneyHome = () => {
                 fontFamily: FONTS.Manuale,
                 fontSize: 12,
                 fontWeight: '600',
+                textAlign: 'right',
+                alignSelf: 'center',
               }}>
-              مراحل الدبلومة الشاملة
+              {'مراحل ' + DiplomasStore.currentDiploma?.title}
             </Text>
           </View>
 
@@ -66,10 +74,12 @@ const JourneyHome = () => {
               width: '100%',
               alignItems: 'center',
             }}>
-            {PhasesData.map((item, index) => (
+            {ChapterStore.chapters.map((item, index) => (
               <PhaseCard
                 onPress={() => {
+                  ChapterStore.setCurrentChapter(item);
                   navigation.navigate('Lesson');
+                  console.log(item);
                 }}
                 key={index}
                 index={index}
@@ -81,7 +91,7 @@ const JourneyHome = () => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 export default JourneyHome;
 

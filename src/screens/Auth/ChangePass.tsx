@@ -1,18 +1,20 @@
 import {
   Alert,
   Platform,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {COLORS} from '../../constants/Colors';
 import {RPH, RPW} from '../../utils/ScreenSize';
 import ChevronRight from '../../assets/icons/ChevronRight';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import LogoSvg from '../../assets/imgs/Logo';
 import {CONSTANTS} from '../../constants/Constants';
 import {FONTS} from '../../constants/Fonts';
@@ -20,13 +22,20 @@ import {AuthInput, CustomBtn} from '../../components';
 import Ellipse from '../../assets/icons/Ellipse';
 import {observer} from 'mobx-react';
 import ForgetPasswordStore from './Stores/ForgetPasswordStore';
+import SignupStore from './Stores/SignupStore';
 
-interface Navigators {
-  OTP: {screen: string} | undefined;
-}
+const iosShadow = {
+  shadowOpacity: 0.2,
+  shadowColor: '#080808',
+  shadowOffset: {
+    height: 0,
+    width: 0,
+  },
+};
 
-const ForgetPassword = observer((): React.JSX.Element => {
-  const navigation = useNavigation<NavigationProp<Navigators>>();
+const ChangePass = observer(() => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView
       style={{
@@ -41,7 +50,6 @@ const ForgetPassword = observer((): React.JSX.Element => {
             paddingHorizontal: RPW(8),
           }}>
           <Ellipse />
-
           <View
             style={{
               flexDirection: 'row',
@@ -71,18 +79,29 @@ const ForgetPassword = observer((): React.JSX.Element => {
               alignSelf: 'center',
               marginBottom: RPH(5.5),
             }}>
-            استرداد كلمة المرور
+            قم بادخال كلمة المرور الجديدة
           </Text>
 
-          <AuthInput
-            placeholder="رقم الهاتف"
-            keyboardType="phone-pad"
-            secureText={false}
-            required={false}
-            borderRadius={8}
-            value={ForgetPasswordStore.phoneNumber}
-            onChangeText={val => ForgetPasswordStore.setPhoneNumber(val)}
-          />
+          <View style={styles.container}>
+            <AuthInput
+              keyboardType="default"
+              required
+              placeholder="كلمة المرور"
+              secureText
+              value={SignupStore.password}
+              onChangeText={value => SignupStore.setPassword(value)}
+            />
+            <View style={{marginBottom: RPW(6)}} />
+            <AuthInput
+              keyboardType="default"
+              required
+              placeholder="تأكيد كلمة المرور"
+              secureText
+              value={SignupStore.re_password}
+              onChangeText={value => SignupStore.setRePassword(value)}
+            />
+          </View>
+
           <View
             style={{
               marginBottom: RPH(6),
@@ -90,13 +109,17 @@ const ForgetPassword = observer((): React.JSX.Element => {
           />
           <CustomBtn
             backgroundColor={COLORS.main}
-            title="ارسال رمز الأمان"
+            title="تغيير"
             borderRadius={8}
             onPress={async () => {
-              if (await ForgetPasswordStore.sendPhoneNumber()) {
-                navigation.navigate('OTP');
+              if (SignupStore.password == SignupStore.re_password) {
+                if (
+                  await ForgetPasswordStore.changePass(SignupStore.password)
+                ) {
+                  navigation.navigate('Login');
+                }
               } else {
-                Alert.alert('خطأ', 'تحقق من رقم الهاتف');
+                Alert.alert('خطأ', 'كلمتين المرور غير متطابقتين');
               }
             }}
             titleColor={COLORS.white}
@@ -107,6 +130,27 @@ const ForgetPassword = observer((): React.JSX.Element => {
   );
 });
 
-export default ForgetPassword;
+export default ChangePass;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    // flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    writingDirection: 'ltr',
+    width: '100%',
+  },
+  box: {
+    borderWidth: 1,
+    borderColor: COLORS.main,
+    borderRadius: 8,
+    width: 50,
+    height: 50,
+    margin: 10,
+    textAlign: 'center',
+    fontSize: 20,
+    fontFamily: FONTS.Manuale,
+    fontWeight: Platform.OS == 'android' ? 'bold' : '600',
+  },
+});

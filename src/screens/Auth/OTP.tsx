@@ -1,5 +1,7 @@
 import {
+  Alert,
   Platform,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -18,6 +20,8 @@ import {CONSTANTS} from '../../constants/Constants';
 import {FONTS} from '../../constants/Fonts';
 import {AuthInput, CustomBtn} from '../../components';
 import Ellipse from '../../assets/icons/Ellipse';
+import {observer} from 'mobx-react';
+import ForgetPasswordStore from './Stores/ForgetPasswordStore';
 
 const iosShadow = {
   shadowOpacity: 0.2,
@@ -28,14 +32,32 @@ const iosShadow = {
   },
 };
 
-const OTP = () => {
+const OTP = observer(() => {
   const navigation = useNavigation();
-  const [otp, setOtp] = useState(['', '', '', '', '']);
+  const [otp, setOtp] = useState<string[]>(['', '', '', '', '']);
+  const [timerMin, setTimerMin] = useState<number>(40);
+  const [resend, setResend] = useState<boolean>(false);
   const inputs: any[] = [];
 
   useEffect(() => {
     inputs[0].focus();
   }, []);
+
+  useEffect(() => {
+    const timeOutTimer = setTimeout(() => {
+      if (timerMin > 0) {
+        setTimerMin(timerMin - 1);
+      } else {
+        setResend(true);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timeOutTimer);
+  }, [timerMin]);
+
+  useEffect(() => {
+    ForgetPasswordStore.setOTPCode(otp.join(''));
+  }, [otp]);
 
   const handleOtpChange = (value: number | string, index: number) => {
     const newOtp: any[] = [...otp];
@@ -119,16 +141,25 @@ const OTP = () => {
               justifyContent: 'space-between',
               alignSelf: 'center',
             }}>
-            <Text
-              style={{
-                fontFamily: FONTS.Manuale,
-                fontSize: 10,
-                fontWeight: '500',
-                color: '#777777',
-                textDecorationLine: 'underline',
-              }}>
-              اعادة الارسال
-            </Text>
+            <Pressable
+              onPress={() => {
+                ForgetPasswordStore.sendPhoneNumber();
+                console.log('sent');
+                setTimerMin(60);
+                setResend(false);
+              }}
+              disabled={!resend}>
+              <Text
+                style={{
+                  fontFamily: FONTS.Manuale,
+                  fontSize: 10,
+                  fontWeight: '500',
+                  color: resend ? COLORS.main : '#777777',
+                  textDecorationLine: 'underline',
+                }}>
+                اعادة الارسال
+              </Text>
+            </Pressable>
             <Text
               style={{
                 fontFamily: FONTS.Manuale,
@@ -136,7 +167,7 @@ const OTP = () => {
                 fontWeight: '500',
                 color: COLORS.main,
               }}>
-              00:40
+              00:{timerMin < 10 ? `0${timerMin}` : timerMin}
             </Text>
           </View>
           <View
@@ -148,14 +179,21 @@ const OTP = () => {
             backgroundColor={COLORS.main}
             title="ادخال"
             borderRadius={8}
-            onPress={() => {}}
+            onPress={async () => {
+              console.log(ForgetPasswordStore.otpCode);
+              if (await ForgetPasswordStore.verifyOTP()) {
+                navigation.navigate('ChangePass');
+              } else {
+                Alert.alert('خطأ', 'تأكد من الرمز المرسل اليك');
+              }
+            }}
             titleColor={COLORS.white}
           />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 export default OTP;
 

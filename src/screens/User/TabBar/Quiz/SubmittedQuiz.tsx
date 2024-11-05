@@ -9,13 +9,14 @@ import {
 import React, {useState} from 'react';
 import {RPH, RPW} from '../../../../utils/ScreenSize';
 import {COLORS} from '../../../../constants/Colors';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import ChevronRight from '../../../../assets/icons/ChevronRight';
 import {FONTS} from '../../../../constants/Fonts';
 import ProgressBar from '../../../../components/ProgressBar';
 import {CustomBtn} from '../../../../components';
 import QuizImage from '../../../../assets/imgs/QuizImage';
 import QuizBankCard from './QuizBankCard';
+import {observer} from 'mobx-react';
 
 const iosShadow = {
   shadowOpacity: 0.2,
@@ -25,8 +26,12 @@ const iosShadow = {
     width: 0,
   },
 };
-const SubmittedQuiz = () => {
-  const navigation = useNavigation();
+
+interface Navigators {
+  QuizBank: undefined;
+}
+const SubmittedQuiz = observer(() => {
+  const navigation = useNavigation<NavigationProp<Navigators>>();
   const [selectedOption, setSelectedOption] = useState<string | null>('المقص');
   const options = ['المقص', 'مكنة الخياطة', 'المسطرة'];
 
@@ -64,6 +69,7 @@ const SubmittedQuiz = () => {
             {/* Options */}
             {options.map((option, index) => (
               <TouchableOpacity
+                disabled
                 key={index}
                 style={[
                   styles.option,
@@ -78,7 +84,6 @@ const SubmittedQuiz = () => {
 
           <QuizBankCard
             onPress={() => {
-              console.log('hi');
               navigation.navigate('QuizBank');
             }}
           />
@@ -115,7 +120,7 @@ const SubmittedQuiz = () => {
       </ScrollView>
     </View>
   );
-};
+});
 
 export default SubmittedQuiz;
 

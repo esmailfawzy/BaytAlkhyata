@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_URL } from '../constants/AppConfig';
+import {BASE_URL} from '../constants/AppConfig';
 
 // Set config defaults when creating the instance
 export const server = axios.create({
@@ -31,13 +31,33 @@ export const server = axios.create({
 //   },
 // );
 
-// server.interceptors.response.use(
-//   async response => {
-//     console.log('response from interceptors', response);
-//     return Promise.resolve(response);
-//   },
-//   async error => {
-//     console.log('error from response', error);
-//     return Promise.reject(error);
-//   },
-// );
+server.interceptors.response.use(
+  async response => {
+    // console.log('response from interceptors', response);
+    return Promise.resolve(response);
+  },
+  async error => {
+    // console.log('error from response', error);
+    // const msg = 'there is an error in axiosInterceptor: ';
+    if (
+      (error.response.status === 400 || error.response.status === 403,
+      error.response.status === 401)
+    ) {
+      return Promise.reject('Authentication Fail');
+    }
+
+    // if (error.response.status === 404) {
+    //   console.log(msg + 'Not Found');
+    // }
+
+    // if (error.response.status === 500) {
+    //   console.log(msg + 'Internal Server Error');
+    // }
+
+    // if (error.response.status === 508) {
+    //   console.log(msg + 'Time Out');
+    // }
+
+    return Promise.reject(error);
+  },
+);

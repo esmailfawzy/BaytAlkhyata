@@ -1,6 +1,7 @@
 import {
   Image,
   Platform,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -16,11 +17,18 @@ import {COLORS} from '../../../../constants/Colors';
 import {IMGS} from '../../../../assets';
 import {FONTS} from '../../../../constants/Fonts';
 import SaveIcon from '../../../../assets/icons/SaveIcon';
+import DiplomasStore, {
+  AllDiplomas,
+  StudentDiploma,
+} from './Stores/DiplomasStore';
+import {observer} from 'mobx-react';
+import ProgressBar from '../../../../components/ProgressBar';
 
-interface KnownTypes {
-  item: any;
+type KnownTypes = {
+  item: AllDiplomas & StudentDiploma;
   id: number;
-}
+  owned: boolean;
+};
 
 const iosShadow = {
   shadowOpacity: 0.2,
@@ -35,17 +43,19 @@ type RootStackParamList = {
   JourneyHome: any;
 };
 
-const Card = ({item, id}: KnownTypes) => {
+const Card = observer(({item, id, owned}: KnownTypes) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   // const navigation = useNavigation();
   return (
     <TouchableOpacity
-      disabled={!item.isActive}
       activeOpacity={CONSTANTS.activeOpacity}
       onPress={() => {
-        item.owned
-          ? navigation.navigate('JourneyHome')
-          : SheetManager.show('course-overview');
+        if (owned) {
+          DiplomasStore.setCurrentDiploma(item);
+          navigation.navigate('JourneyHome');
+        } else {
+          SheetManager.show('course-overview');
+        }
       }}
       key={item._id}
       style={[
@@ -53,8 +63,10 @@ const Card = ({item, id}: KnownTypes) => {
           borderRadius: 10,
           width: '100%',
           minHeight: RPH(22),
-          backgroundColor: item.isActive ? COLORS.white : '#79797933',
-          opacity: item.isActive ? 1 : 0.6,
+          backgroundColor: COLORS.white,
+          // backgroundColor: item.isActive ? COLORS.white : '#79797933',
+          opacity: 1,
+          // opacity: item.isActive ? 1 : 0.6,
           marginBottom: RPH(3),
           borderBottomWidth: 3,
           borderEndWidth: 3,
@@ -89,7 +101,14 @@ const Card = ({item, id}: KnownTypes) => {
             }}>
             {item.title}
           </Text>
-          {item.isActive && <SaveIcon />}
+          <Pressable
+            onPress={() => {
+              console.log(item);
+              DiplomasStore.toggleBookMark(item._id);
+            }}>
+            <SaveIcon />
+          </Pressable>
+          {/* {item.isActive && <SaveIcon />} */}
         </View>
         <Text
           style={{
@@ -102,7 +121,7 @@ const Card = ({item, id}: KnownTypes) => {
           {item.description}
         </Text>
       </View>
-      {!item.isActive && (
+      {/* {!item.isActive && (
         <Image
           source={IMGS.JourneyLock}
           resizeMode="contain"
@@ -116,21 +135,25 @@ const Card = ({item, id}: KnownTypes) => {
             opacity: 0.5,
           }}
         />
-      )}
+      )} */}
+      {owned && <ProgressBar progress={+item.percentageCompleted || 0} />}
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
           width: '100%',
+          marginTop: RPW(9),
         }}>
         <TouchableOpacity
-          disabled={!item.isActive}
           activeOpacity={CONSTANTS.activeOpacity}
           onPress={() => {
-            item.owned
-              ? navigation.navigate('JourneyHome')
-              : SheetManager.show('course-overview');
+            if (owned) {
+              DiplomasStore.setCurrentDiploma(item);
+              navigation.navigate('JourneyHome');
+            } else {
+              SheetManager.show('course-overview');
+            }
           }}
           style={{
             height: 37,
@@ -146,13 +169,14 @@ const Card = ({item, id}: KnownTypes) => {
               fontWeight: '500',
               color: COLORS.white,
             }}>
-            {item.owned ? 'تكملة رحلة التعلم' : 'معرفة المزيد عن الدبلومة'}
+            {owned ? 'تكملة رحلة التعلم' : 'معرفة المزيد عن الدبلومة'}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled={!item.isActive}
           activeOpacity={CONSTANTS.activeOpacity}
-          onPress={() => {}}
+          onPress={() => {
+            !owned && SheetManager.show('course-overview');
+          }}
           style={{
             height: 37,
             alignItems: 'center',
@@ -160,7 +184,7 @@ const Card = ({item, id}: KnownTypes) => {
             backgroundColor: 'transparent',
             padding: 10,
             borderRadius: 8,
-            borderWidth: item.owned ? 0 : 1,
+            borderWidth: owned ? 0 : 1,
             borderColor: '#FAB65E',
           }}>
           <Text
@@ -169,13 +193,13 @@ const Card = ({item, id}: KnownTypes) => {
               fontWeight: '500',
               color: '#FAB65E',
             }}>
-            {item.owned ? '50%' : 'شراء'}
+            {!owned && 'شراء'}
           </Text>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
-};
+});
 
 export default Card;
 

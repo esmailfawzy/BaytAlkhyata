@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {LegacyRef, useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -8,16 +8,30 @@ import {
   SafeAreaView,
   ScrollView,
   Platform,
+  Image,
+  RefreshControl,
 } from 'react-native';
-import ChevronRight from '../../../assets/icons/ChevronRight';
-import UserIcon from '../../../assets/icons/UserIcon';
-import EditIcon from '../../../assets/icons/EditIcon';
+import ChevronRight from '../../../../assets/icons/ChevronRight';
+import UserIcon from '../../../../assets/icons/UserIcon';
+import EditIcon from '../../../../assets/icons/EditIcon';
 import {useNavigation} from '@react-navigation/native';
-import {COLORS} from '../../../constants/Colors';
-import {RPW} from '../../../utils/ScreenSize';
+import {COLORS} from '../../../../constants/Colors';
+import {RPW} from '../../../../utils/ScreenSize';
+import {observer} from 'mobx-react';
+import ProfileStore from './ProfileStore';
+import {CustomBtn} from '../../../../components';
 
-const Profile = () => {
+const Profile = observer(() => {
   const navigation = useNavigation();
+  const nameInputRef = useRef<TextInput | null>(null);
+  const phoneInputRef = useRef<TextInput | null>(null);
+  const emailInputRef = useRef<TextInput | null>(null);
+  const passwordInputRef = useRef<TextInput | null>(null);
+
+  useEffect(() => {
+    ProfileStore.getProfile();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View
@@ -35,6 +49,14 @@ const Profile = () => {
         }}
       />
       <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={ProfileStore.isLoading}
+            onRefresh={() => {
+              ProfileStore.getProfile();
+            }}
+          />
+        }
         keyboardDismissMode="on-drag"
         automaticallyAdjustKeyboardInsets>
         <View
@@ -50,13 +72,26 @@ const Profile = () => {
               style={styles.backButton}>
               <ChevronRight color="#fff" />
             </TouchableOpacity>
-            <Text style={styles.headerTitle}>اسماعيل فوزي</Text>
+            <Text style={styles.headerTitle}>{ProfileStore.name}</Text>
           </View>
 
           {/* Profile Avatar */}
           <View style={styles.avatarContainer}>
             <View style={styles.avatar}>
-              <UserIcon />
+              {ProfileStore.image !== '' &&
+              !ProfileStore.image.endsWith('/uploads/images/null') ? (
+                <Image
+                  source={{uri: ProfileStore.image}}
+                  style={{
+                    width: RPW(18),
+                    height: RPW(18),
+                    borderRadius: RPW(18),
+                  }}
+                  resizeMode="contain"
+                />
+              ) : (
+                <UserIcon />
+              )}
             </View>
             <TouchableOpacity style={styles.editIcon}>
               <EditIcon />
@@ -69,11 +104,17 @@ const Profile = () => {
               <Text style={styles.label}>الاسم</Text>
               <View style={styles.inputContainer}>
                 <TextInput
+                  ref={nameInputRef}
                   style={styles.input}
-                  value="اسماعيل فوزي"
+                  value={ProfileStore.name}
                   textAlign="right"
+                  onChangeText={val => ProfileStore.setName(val)}
                 />
-                <TouchableOpacity style={styles.editButton}>
+                <TouchableOpacity
+                  onPress={() => {
+                    nameInputRef.current?.focus();
+                  }}
+                  style={styles.editButton}>
                   <EditIcon />
                 </TouchableOpacity>
               </View>
@@ -84,10 +125,16 @@ const Profile = () => {
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.input}
-                  value="01554400447"
+                  ref={phoneInputRef}
+                  value={ProfileStore.phone}
+                  onChangeText={val => ProfileStore.setPhone(val)}
                   textAlign="right"
                 />
-                <TouchableOpacity style={styles.editButton}>
+                <TouchableOpacity
+                  onPress={() => {
+                    phoneInputRef.current?.focus();
+                  }}
+                  style={styles.editButton}>
                   <EditIcon />
                 </TouchableOpacity>
               </View>
@@ -98,35 +145,55 @@ const Profile = () => {
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.input}
-                  value="esmail.elshishtawy.2001@gmail.com"
+                  ref={emailInputRef}
+                  value={ProfileStore.email}
+                  onChangeText={val => ProfileStore.setEmail(val)}
                   textAlign="right"
+                  keyboardType="email-address"
                 />
-                <TouchableOpacity style={styles.editButton}>
+                <TouchableOpacity
+                  onPress={() => {
+                    emailInputRef.current?.focus();
+                  }}
+                  style={styles.editButton}>
                   <EditIcon />
                 </TouchableOpacity>
               </View>
             </View>
 
-            <View style={styles.inputGroup}>
+            <View style={[styles.inputGroup, {marginBottom: RPW(15)}]}>
               <Text style={styles.label}>كلمة المرور</Text>
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.input}
-                  value="***********"
+                  ref={passwordInputRef}
+                  value={ProfileStore.password || '********'}
+                  onChangeText={val => ProfileStore.setPassword(val)}
                   secureTextEntry
                   textAlign="right"
                 />
-                <TouchableOpacity style={styles.editButton}>
+                <TouchableOpacity
+                  onPress={() => {
+                    passwordInputRef.current?.focus();
+                  }}
+                  style={styles.editButton}>
                   <EditIcon />
                 </TouchableOpacity>
               </View>
             </View>
+
+            <CustomBtn
+              title="تعديل"
+              backgroundColor={COLORS.main}
+              borderRadius={10}
+              onPress={() => ProfileStore.updateProfile()}
+            />
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 export default Profile;
 
