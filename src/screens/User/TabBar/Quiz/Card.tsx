@@ -84,6 +84,7 @@ const Card = observer(({item, id}: KnownTypes) => {
           activeOpacity={CONSTANTS.activeOpacity}
           onPress={() => {
             QuizViewStore.setDifficulty(item.difficulty);
+            console.log(item.difficulty);
             navigation.navigate('QuizView');
           }}
           style={{

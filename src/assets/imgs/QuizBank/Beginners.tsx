@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Svg, {Rect, Defs, Pattern, Use, Image} from 'react-native-svg';
-const Beginners = props => (
+const Beginners: React.FC<{props?: any}> = ({props}) => (
   <Svg
     width={111}
     height={170}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Svg, {G, Path, Defs, ClipPath, Rect} from 'react-native-svg';
-const SoundOff = props => (
+const SoundOff: React.FC<{props?: any}> = ({props}) => (
   <Svg
     width={18}
     height={18}

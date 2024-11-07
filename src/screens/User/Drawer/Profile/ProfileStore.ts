@@ -1,7 +1,7 @@
 import {action, makeAutoObservable, observable} from 'mobx';
 import {server} from '../../../../utils/ServerConfig';
 import GlobalStore from '../../../../utils/GlobalStore';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 
 interface ProfileType {
   fullName?: string;
@@ -97,28 +97,47 @@ class ProfileStore {
   async updateProfile() {
     try {
       this.setIsLoading(true);
+      // const data = new FormData();
       const data: ProfileType = {
         fullName: this.name,
         email: this.email,
         phone: this.phone,
       };
-
+      // data.append('fullName', this.name);
+      // data.append('email', this.email);
+      // data.append('phone', this.phone);
       if (this.image !== '' && !this.image.endsWith('/uploads/images/null')) {
-        data['image'] = this.image;
+        const uri =
+          Platform.OS === 'ios'
+            ? this.image.replace('file://', '')
+            : this.image;
+        console.log(uri, '\n from the server');
+        data['image'] = uri;
+
+        // data.append('image', {
+        //   uri,
+        //   name: 'userProfile.jpg',
+        //   type: 'image/jpg',
+        // });
+        // data.append('image', uri);
       }
 
       if (this.password.length > 1) {
         data['password'] = this.password;
+        // data.append('password', this.password);
       }
       const res = await server.patch('/student/profile', data, {
-        headers: {Authorization: 'Bearer ' + GlobalStore.jwtToken},
+        headers: {
+          Authorization: 'Bearer ' + GlobalStore.jwtToken,
+          // 'Content-Type': 'multipart/form-data',
+        },
       });
       if (res.status == 200) {
         Alert.alert(res.data.status, res.data.message);
         this.getProfile();
       }
     } catch (error) {
-      console.error('error getting profiel', error);
+      console.error('error updating profile', error);
     } finally {
       this.setIsLoading(false);
     }

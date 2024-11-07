@@ -16,7 +16,7 @@ interface ProgressBarProps {
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = observer(
-  ({progress, color = COLORS.main}) => {
+  ({progress = 0, color = COLORS.main}) => {
     const [width, setWidth] = useState<number>(0);
     const animatedWidth = new Animated.Value(0);
 
@@ -34,7 +34,7 @@ const ProgressBar: React.FC<ProgressBarProps> = observer(
 
     return (
       <View style={styles.container} onLayout={handleLayout}>
-        <Animated.View style={[styles.progress, {width: animatedWidth}]}>
+        <Animated.View style={[styles.progress, {width: animatedWidth || 0}]}>
           <View
             style={[
               styles.gradient,

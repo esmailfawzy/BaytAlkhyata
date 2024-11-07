@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Svg, {Rect, Defs, Pattern, Use, Image} from 'react-native-svg';
-const BankQuizIcon = props => (
+const BankQuizIcon: React.FC<{props?: any}> = ({props}) => (
   <Svg
     width={75}
     height={77}

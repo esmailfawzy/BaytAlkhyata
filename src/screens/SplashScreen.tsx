@@ -18,12 +18,19 @@ import LibraryStore from './User/Drawer/Library/LibraryStore';
 import QuizViewStore from './User/TabBar/Quiz/Stores/QuizViewStore';
 import ChatStore from './User/TabBar/ContactUs/Store/ChatStore';
 import DiplomasStore from './User/Drawer/Journeys/Stores/DiplomasStore';
+import Orientation from 'react-native-orientation-locker';
+
+type Navigators = {
+  UserDrawer: {screen: string} | undefined;
+  OnboardingStack: {screen: string} | undefined;
+};
 
 const SplashScreen = observer(() => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<Navigators> & any>();
 
   useEffect(() => {
     getTokenFromStorage();
+    Orientation.lockToPortrait();
   }, []);
 
   const getTokenFromStorage = async () => {
@@ -51,8 +58,6 @@ const SplashScreen = observer(() => {
         DiplomasStore.getStudentDiplomas(),
         GiftstoreStore.getAllProducts(),
         LibraryStore.getAllBooks(),
-        QuizViewStore.getQuizArray(),
-        // ChatStore.getMessages(),
         ChatStore.getFAQ(),
       ]).then(res => {
         console.log('done getting the data', res);

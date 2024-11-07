@@ -36,7 +36,7 @@ const iosShadow = {
   },
 };
 
-const {width: SCREEN_WIDTH} = Dimensions.get('window');
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const generateWaveform = (barsCount: number): number[] => {
   // Generate random heights for bars to simulate waveform

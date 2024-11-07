@@ -36,7 +36,7 @@ class LibraryStore {
   setIsDownloading(value: boolean) {
     this.isDownloading = value;
   }
-  
+
   async getAllBooks() {
     try {
       const res = await server.get('/student/library', {
@@ -61,10 +61,12 @@ class LibraryStore {
       });
       if (res.status == 200) {
         // this.setBooks(res.data.result);
+        console.log(res.data.pdfUrl);
         return res.data.pdfUrl;
       }
     } catch (error) {
       console.error('error getting books', error);
+      return null;
     }
   }
 

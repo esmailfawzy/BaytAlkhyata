@@ -3,7 +3,7 @@ import React from 'react';
 import {RPH, RPW} from '../../../utils/ScreenSize';
 import {COLORS} from '../../../constants/Colors';
 
-export default styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: RPW(48),
@@ -55,3 +55,5 @@ export default styles = StyleSheet.create({
     marginBottom: Platform.OS == 'android' ? RPW(2) : 0,
   },
 });
+
+export default styles;

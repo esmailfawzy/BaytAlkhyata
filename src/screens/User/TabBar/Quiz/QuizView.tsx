@@ -17,7 +17,7 @@ import ProgressBar from '../../../../components/ProgressBar';
 import {CustomBtn} from '../../../../components';
 import QuizImage from '../../../../assets/imgs/QuizImage';
 import {observer} from 'mobx-react';
-import QuizViewStore from './Stores/QuizViewStore';
+import QuizViewStore, {QuestionType} from './Stores/QuizViewStore';
 
 const iosShadow = {
   shadowOpacity: 0.2,
@@ -32,16 +32,24 @@ interface Navigators {
   SubmittedQuiz: undefined;
 }
 
-const QuizView = observer(() => {
+const QuizView: React.FC = observer(() => {
   const navigation = useNavigation<NavigationProp<Navigators>>();
+  const [questionsArr, setQuestionsArr] = useState<QuestionType[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
+  // QuizViewStore.quizArray.length - 1,
 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   useEffect(() => {
-    QuizViewStore.getQuizArray();
-    console.log(QuizViewStore.quizArray);
-  }, [QuizViewStore.difficulty]);
+    getArray();
+  }, []);
+
+  const getArray = async () => {
+    const res = await QuizViewStore.getQuizArray();
+    console.log('res from Quiz View', res);
+    setQuestionsArr(res);
+    setCurrentQuestion(res?.length - 1);
+  };
 
   if (QuizViewStore.isLoading) {
     return (
@@ -59,7 +67,7 @@ const QuizView = observer(() => {
 
   return (
     <View style={{flex: 1, backgroundColor: COLORS.white}}>
-      <ScrollView>
+      <ScrollView style={{flex: 1}}>
         <View style={styles.container}>
           <View>
             {/* Header */}
@@ -72,12 +80,15 @@ const QuizView = observer(() => {
               </TouchableOpacity>
               <Text style={styles.title}>امتحان علي الباترون</Text>
             </View>
+
             <Text style={styles.timer}>05:22</Text>
 
             {/* Progress Bar */}
             <ProgressBar
               progress={
-                (currentQuestion / QuizViewStore.quizArray?.length) * 100
+                (questionsArr.length > 0
+                  ? currentQuestion / questionsArr?.length
+                  : 1 / 1) * 100
               }
             />
           </View>
@@ -90,79 +101,94 @@ const QuizView = observer(() => {
               <QuizImage />
             </View> */}
 
-          <View>
-            {/* Question */}
-            <Text
-              style={[
-                styles.question,
-                {
-                  marginVertical: RPW(12),
-                },
-              ]}>
-              {QuizViewStore.quizArray[currentQuestion]?.question}
-            </Text>
-            {/* Options */}
-            {QuizViewStore.quizArray[currentQuestion]?.answers.map(
-              (item, ind) => (
+          {questionsArr.length > 0 ? (
+            <View style={{flex: 1}}>
+              {/* Question */}
+              <Text
+                style={[
+                  styles.question,
+                  {
+                    marginVertical: RPW(12),
+                  },
+                ]}>
+                {questionsArr[currentQuestion]?.question}
+              </Text>
+              {/* Options */}
+              {questionsArr[currentQuestion]?.answers.map((item, ind) => (
                 <TouchableOpacity
+                  key={ind}
                   style={[
                     styles.option,
-                    selectedOption === item._id && styles.selectedOption,
+                    selectedOption == item?._id
+                      ? {
+                          borderColor: '#FF8000',
+                        }
+                      : {
+                          borderColor: '#ccc',
+                        },
                     Platform.OS == 'ios' && {...iosShadow},
                   ]}
-                  onPress={() => setSelectedOption(item._id)}>
-                  <Text style={styles.optionText}>
-                    {/* {QuizViewStore.quizArray[0]?.answers[0].text} */}
-                    {item.text}
-                  </Text>
+                  onPress={() => setSelectedOption(item?._id)}>
+                  <Text style={styles.optionText}>{item.text}</Text>
                 </TouchableOpacity>
-              ),
-            )}
-          </View>
-
-          <View>
-            {/* Navigation Buttons */}
-            <View
-              style={{
-                width: '95%',
-                marginTop: 20,
-                alignSelf: 'center',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginBottom: RPW(4),
-              }}>
-              <CustomBtn
-                width={'45%'}
-                backgroundColor={COLORS.main}
-                borderRadius={100}
-                borderWidth={1}
-                title="التالي"
-                titleColor={COLORS.white}
-                onPress={() => {}}
-              />
-              <CustomBtn
-                width={'45%'}
-                backgroundColor={'#E2E2E2'}
-                borderRadius={100}
-                title="السابق"
-                titleColor={'#6D6D6D'}
-                onPress={() => {}}
-              />
+              ))}
             </View>
-            <CustomBtn
-              width={'100%'}
-              backgroundColor={COLORS.main}
-              borderRadius={100}
-              title="الانتهاء"
-              titleColor={COLORS.white}
-              onPress={() => {
-                navigation.navigate('SubmittedQuiz');
-              }}
-            />
-          </View>
+          ) : (
+            <></>
+          )}
         </View>
       </ScrollView>
+      <View style={{width: '95%', marginBottom: RPW(8), alignSelf: 'center'}}>
+        {/* Navigation Buttons */}
+        <View
+          style={{
+            width: '100%',
+            marginTop: 20,
+            alignSelf: 'center',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: RPW(4),
+          }}>
+          <CustomBtn
+            width={'45%'}
+            backgroundColor={COLORS.main}
+            borderRadius={100}
+            borderWidth={1}
+            title="التالي"
+            disabled={currentQuestion < questionsArr.length}
+            titleColor={COLORS.white}
+            onPress={() => {
+              if (currentQuestion < questionsArr.length) {
+                setCurrentQuestion(currentQuestion + 1);
+              }
+            }}
+          />
+          <CustomBtn
+            width={'45%'}
+            backgroundColor={'#E2E2E2'}
+            borderRadius={100}
+            title="السابق"
+            titleColor={'#6D6D6D'}
+            disabled={currentQuestion == 0}
+            onPress={() => {
+              if (currentQuestion !== 0) {
+                setCurrentQuestion(currentQuestion - 1);
+              }
+            }}
+          />
+        </View>
+        <CustomBtn
+          width={'100%'}
+          backgroundColor={COLORS.main}
+          borderRadius={100}
+          title="الانتهاء"
+          titleColor={COLORS.white}
+          onPress={() => {
+            navigation.navigate('SubmittedQuiz');
+          }}
+        />
+      </View>
     </View>
   );
 });
@@ -173,13 +199,12 @@ const styles = StyleSheet.create({
   container: {
     padding: RPH(3),
     // marginBottom: RPH(8),
-    flex: 1,
+    // flex: 1,
     width: '100%',
     alignSelf: 'center',
     // alignItems: 'center',
     backgroundColor: COLORS.white,
     justifyContent: 'space-between',
-    minHeight: '90%',
   },
   header: {
     flexDirection: 'row',
@@ -212,7 +237,6 @@ const styles = StyleSheet.create({
   },
   option: {
     borderWidth: 1,
-    borderColor: '#ccc',
     padding: RPW(3),
     borderRadius: 10,
     marginBottom: 10,

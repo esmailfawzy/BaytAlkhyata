@@ -14,7 +14,7 @@ import React, {useEffect, useState} from 'react';
 import {COLORS} from '../../constants/Colors';
 import {RPH, RPW} from '../../utils/ScreenSize';
 import ChevronRight from '../../assets/icons/ChevronRight';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import LogoSvg from '../../assets/imgs/Logo';
 import {CONSTANTS} from '../../constants/Constants';
 import {FONTS} from '../../constants/Fonts';
@@ -32,8 +32,12 @@ const iosShadow = {
   },
 };
 
+type Navigators = {
+  ChangePass: {screen: string} | undefined;
+};
+
 const OTP = observer(() => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<Navigators>>();
   const [otp, setOtp] = useState<string[]>(['', '', '', '', '']);
   const [timerMin, setTimerMin] = useState<number>(40);
   const [resend, setResend] = useState<boolean>(false);

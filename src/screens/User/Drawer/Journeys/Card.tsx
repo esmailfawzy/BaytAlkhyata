@@ -25,7 +25,7 @@ import {observer} from 'mobx-react';
 import ProgressBar from '../../../../components/ProgressBar';
 
 type KnownTypes = {
-  item: AllDiplomas & StudentDiploma;
+  item: (AllDiplomas & StudentDiploma) | any;
   id: number;
   owned: boolean;
 };

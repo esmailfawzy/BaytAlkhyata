@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Svg, {Rect, Defs, Pattern, Use, Image} from 'react-native-svg';
-const DownloadIcon = props => (
+const DownloadIcon: React.FC<{props?: any}> = ({props}) => (
   <Svg
     width={20}
     height={21}

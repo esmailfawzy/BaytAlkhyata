@@ -14,7 +14,7 @@ import React, {useEffect, useState} from 'react';
 import {COLORS} from '../../constants/Colors';
 import {RPH, RPW} from '../../utils/ScreenSize';
 import ChevronRight from '../../assets/icons/ChevronRight';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import LogoSvg from '../../assets/imgs/Logo';
 import {CONSTANTS} from '../../constants/Constants';
 import {FONTS} from '../../constants/Fonts';
@@ -33,8 +33,11 @@ const iosShadow = {
   },
 };
 
+type Navigators = {
+  Login: {screen: string} | undefined;
+};
 const ChangePass = observer(() => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<Navigators>>();
 
   return (
     <SafeAreaView

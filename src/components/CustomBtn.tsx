@@ -1,4 +1,11 @@
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  DimensionValue,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {RPH, RPW} from '../utils/ScreenSize';
 import {FONTS} from '../constants/Fonts';
@@ -16,7 +23,7 @@ interface props {
   disabled?: boolean;
 }
 
-const CustomBtn = (props: props): React.JSX.Element => {
+const CustomBtn: React.FC<props> = props => {
   return (
     <TouchableOpacity
       onPress={props.onPress}

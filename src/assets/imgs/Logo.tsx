@@ -8,8 +8,8 @@ interface props {
 
 const LogoSvg = (props: props) => (
   <Svg
-    width={props.width}
-    height={props.height}
+    width={props.width || 96}
+    height={props.height || 113}
     viewBox={`0 0 ${96} ${113}`}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

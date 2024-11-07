@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Saltus</string>
+    <string name="app_name">Bayt-AlkhyataOnline</string>
      <!-- rtnp channel id -->
     <string name="rntp_temporary_channel_id">temporary_channel</string>
     <!-- rtnp channel name -->

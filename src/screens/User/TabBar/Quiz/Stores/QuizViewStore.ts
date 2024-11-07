@@ -7,7 +7,7 @@ interface AnswerType {
   text: string;
 }
 
-interface QuestionType {
+export interface QuestionType {
   _id: string;
   question: string;
   answers: Array<AnswerType>;
@@ -23,10 +23,12 @@ class QuizViewStore {
     makeAutoObservable(this, {
       quizArray: observable,
       setQuizArray: action,
+      resetQuizArray: action,
       getQuizArray: action,
       isLoading: observable,
       setIsLoading: action,
       difficulty: observable,
+      setDifficulty: action,
     });
   }
 
@@ -34,8 +36,11 @@ class QuizViewStore {
     this.isLoading = value;
   }
 
-  setQuizArray(value: Array<QuestionType>) {
+  setQuizArray(value: QuestionType[]) {
     this.quizArray = value;
+  }
+  resetQuizArray() {
+    this.quizArray = [];
   }
   setDifficulty(value: string) {
     this.difficulty = value;
@@ -49,17 +54,18 @@ class QuizViewStore {
         {
           headers: {
             Authorization: 'Bearer ' + GlobalStore.jwtToken,
-            Accept: 'application/json',
           },
         },
       );
 
-      if (res.status == 200) {
+      if (res.status == 200 || res.status == 304) {
         this.setQuizArray(res.data.result);
-        // console.log('res.data', res.data);
+        // console.log('res.data from store', res.data);
+        return res.data?.result;
       }
     } catch (error) {
       console.error('error getting quiz array', error);
+      return [];
     } finally {
       this.setIsLoading(false);
     }

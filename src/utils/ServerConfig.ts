@@ -37,7 +37,7 @@ server.interceptors.response.use(
     return Promise.resolve(response);
   },
   async error => {
-    // console.log('error from response', error);
+    console.log('error from response', error);
     // const msg = 'there is an error in axiosInterceptor: ';
     if (
       (error.response.status === 400 || error.response.status === 403,

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Svg, {Rect, Defs, Pattern, Use, Image} from 'react-native-svg';
-const HardQuiz = props => (
+const HardQuiz: React.FC<{props?: any}> = ({props}) => (
   <Svg
     width={137}
     height={137}

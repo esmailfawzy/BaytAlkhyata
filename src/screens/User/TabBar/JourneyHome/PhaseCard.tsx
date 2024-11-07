@@ -137,10 +137,8 @@ const PhaseCard = observer(({item, index, onPress}: KnownTypes) => {
               fontSize: 12,
               fontWeight: '700',
             }}>
-            <Text style={{color: COLORS.white}}>{`${
-              item.totalExams || 2
-            } / `}</Text>
-            {item.passedExams || 4}
+            <Text style={{color: COLORS.white}}>{`${0} / `}</Text>
+            {0}
           </Text>
         </View>
         <View

@@ -20,6 +20,7 @@ import {RPW} from '../../../../utils/ScreenSize';
 import {observer} from 'mobx-react';
 import ProfileStore from './ProfileStore';
 import {CustomBtn} from '../../../../components';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const Profile = observer(() => {
   const navigation = useNavigation();
@@ -31,6 +32,25 @@ const Profile = observer(() => {
   useEffect(() => {
     ProfileStore.getProfile();
   }, []);
+
+  const selectImage = async () => {
+    const res = await launchImageLibrary({
+      mediaType: 'photo',
+      presentationStyle: 'fullScreen',
+      quality: 1,
+      selectionLimit: 1,
+    });
+
+    if (res.didCancel) {
+      console.log('User cancelled image picker');
+    } else if (res.errorMessage) {
+      console.log('ImagePicker Error: ', res.errorMessage);
+    } else {
+      const uri = res.assets[0].uri || '';
+      ProfileStore.setImage(uri);
+      console.log(uri);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -93,7 +113,7 @@ const Profile = observer(() => {
                 <UserIcon />
               )}
             </View>
-            <TouchableOpacity style={styles.editIcon}>
+            <TouchableOpacity onPress={selectImage} style={styles.editIcon}>
               <EditIcon />
             </TouchableOpacity>
           </View>

@@ -11,15 +11,20 @@ import React from 'react';
 import {COLORS} from '../../constants/Colors';
 import {IMGS} from '../../assets';
 import {RPH, RPW} from '../../utils/ScreenSize';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import LogoSvg from '../../assets/imgs/Logo';
 import {FONTS} from '../../constants/Fonts';
 import {AuthInput, CustomBtn} from '../../components';
 import SignupStore from './Stores/SignupStore';
 import {observer} from 'mobx-react';
 
+type Navigators = {
+  ForgetPassword: {screen: string} | undefined;
+  Signup: {screen: string} | undefined;
+};
+
 const Login = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<Navigators> & any>();
 
   const signinPressed = async () => {
     // navigation.replace('UserDrawer', {

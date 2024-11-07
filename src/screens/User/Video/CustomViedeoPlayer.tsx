@@ -1,5 +1,17 @@
-import React, {useState, useRef, useImperativeHandle, forwardRef} from 'react';
-import {View, TouchableOpacity, Image, Text} from 'react-native';
+import React, {
+  useState,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+  useEffect,
+} from 'react';
+import {
+  View,
+  TouchableOpacity,
+  Image,
+  Text,
+  ActivityIndicator,
+} from 'react-native';
 import Video from 'react-native-video';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Slider from '@react-native-community/slider';
@@ -10,18 +22,34 @@ import PauseBtn from '../../../assets/icons/VideoPlayer/PauseBtn';
 import SoundOn from '../../../assets/icons/VideoPlayer/SoundOn';
 import SoundOff from '../../../assets/icons/VideoPlayer/SoundOff';
 import LinearGradient from 'react-native-linear-gradient';
+import FullScreen from '../../../assets/icons/VideoPlayer/FullScreen';
 // import colors from './colors'; // Assume colors are defined in a separate file
 // import images from './images'; // Assume images are defined in a separate file
+import Orientation from 'react-native-orientation-locker';
+
+type VPTypes = {
+  source: any;
+  componentStyle: any;
+  resizeMode: any;
+  isSoundButton: any;
+};
 
 const CustomVideoPlayer = forwardRef(
-  ({source, componentStyle, resizeMode, isSoundButton}, ref) => {
+  ({source, componentStyle, resizeMode, isSoundButton}: VPTypes, ref) => {
     const [paused, setPaused] = useState(true);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
-    const videoPlayer = useRef(null);
+    const videoPlayer = useRef<any>(null);
     const [loading, setLoading] = useState(false);
+    const [isFullScreen, setIsFullScreen] = useState(false);
     const [videoVolume, setVideoVolume] = useState(1.0);
     const [isControlsShown, setIsControlsShown] = useState(true);
+
+    useEffect(() => {
+      Orientation.unlockAllOrientations();
+
+      return () => Orientation.lockToPortrait();
+    }, []);
 
     useImperativeHandle(ref, () => ({
       play: () => {
@@ -35,7 +63,7 @@ const CustomVideoPlayer = forwardRef(
         videoPlayer.current.seek(0);
         setCurrentTime(0);
       },
-      seek: time => {
+      seek: (time: any) => {
         videoPlayer.current.seek(time);
         setCurrentTime(time);
       },
@@ -43,7 +71,7 @@ const CustomVideoPlayer = forwardRef(
 
     const togglePlayPause = () => setPaused(!paused);
 
-    const onProgress = data => setCurrentTime(data.currentTime);
+    const onProgress = (data: any) => setCurrentTime(data.currentTime);
 
     const onEnd = () => {
       setPaused(true);
@@ -53,17 +81,18 @@ const CustomVideoPlayer = forwardRef(
       setCurrentTime(0);
     };
 
-    const onLoad = data => {
+    const onLoad = (data: any) => {
       setLoading(false);
+      console.log('loading ended');
       setDuration(data.duration);
     };
 
-    const onSlide = value => {
+    const onSlide = (value: any) => {
       videoPlayer.current.seek(value);
       setCurrentTime(value);
     };
 
-    const formatTime = timeInSeconds => {
+    const formatTime = (timeInSeconds: any) => {
       if (isNaN(timeInSeconds)) return '00:00';
       const minutes = Math.floor(timeInSeconds / 60);
       const seconds = Math.floor(timeInSeconds % 60);
@@ -72,9 +101,11 @@ const CustomVideoPlayer = forwardRef(
       }${seconds}`;
     };
 
-    const onBuffer = ({isBuffering}) => setLoading(isBuffering);
+    const onBuffer = ({isBuffering}: {isBuffering: boolean}) =>
+      setLoading(isBuffering);
 
     const toggleMute = () => setVideoVolume(videoVolume === 0.0 ? 1.0 : 0.0);
+    const toggleFullScreen = () => setIsFullScreen(!isFullScreen);
 
     return (
       <View
@@ -95,11 +126,14 @@ const CustomVideoPlayer = forwardRef(
           onProgress={onProgress}
           onEnd={onEnd}
           onLoad={onLoad}
-          onBuffer={onBuffer}
+          // onBuffer={({isBuffering}) => {
+          //   setLoading(isBuffering);
+          // }}
           volume={videoVolume}
           resizeMode={resizeMode}
           repeat={false}
-          fullscreen={true}
+          fullscreen={isFullScreen}
+          onFullscreenPlayerDidDismiss={toggleFullScreen}
           bufferConfig={{
             minBufferMs: 15000,
             maxBufferMs: 30000,
@@ -107,14 +141,7 @@ const CustomVideoPlayer = forwardRef(
             bufferForPlaybackAfterRebufferMs: 5000,
           }}
         />
-        {loading && (
-          <Spinner
-            color={COLORS.white}
-            visible={true}
-            size="large"
-            type="Circle"
-          />
-        )}
+        {loading && <ActivityIndicator size={'large'} color={COLORS.white} />}
         {isControlsShown && (
           <LinearGradient
             colors={['#00000000', '#00000044', '#000000']}
@@ -122,13 +149,26 @@ const CustomVideoPlayer = forwardRef(
             start={{x: 0.5, y: 0}}
             end={{x: 0.5, y: 1}}>
             <View style={styles.controlRow}>
-              {isSoundButton && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: 5,
+                }}>
                 <TouchableOpacity
-                  onPress={toggleMute}
+                  onPress={toggleFullScreen}
                   style={styles.controlButton}>
-                  {videoVolume === 0.0 ? <SoundOff /> : <SoundOn />}
+                  <FullScreen />
                 </TouchableOpacity>
-              )}
+                {isSoundButton && (
+                  <TouchableOpacity
+                    onPress={toggleMute}
+                    style={styles.controlButton}>
+                    {videoVolume === 0.0 ? <SoundOff /> : <SoundOn />}
+                  </TouchableOpacity>
+                )}
+              </View>
               <TouchableOpacity
                 onPress={togglePlayPause}
                 style={styles.controlButton}>

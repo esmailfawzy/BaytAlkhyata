@@ -9,7 +9,7 @@ import {
 import React, {useEffect} from 'react';
 import {RPW} from '../../../../utils/ScreenSize';
 import {COLORS} from '../../../../constants/Colors';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import ChevronRight from '../../../../assets/icons/ChevronRight';
 import {FONTS} from '../../../../constants/Fonts';
 import CourseOverviewCard from './CourseOverviewCard';
@@ -21,7 +21,8 @@ import {observer} from 'mobx-react';
 import DiplomasStore from '../../Drawer/Journeys/Stores/DiplomasStore';
 
 const JourneyHome = observer(() => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NavigationProp<{Lesson: {screen: string} | undefined}>>();
 
   useEffect(() => {
     ChapterStore.getChapters();
